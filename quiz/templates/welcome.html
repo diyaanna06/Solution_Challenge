@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Quiz Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://irp.cdn-website.com/e76f4b81/dms3rep/multi/irregular-periods.png');
+            height: 100vh;
+            background-color: #ffe4e1;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background: #ffe4e1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+          
+        }
+        h1 {
+            color: #d6336c;
+            font-weight: bold;
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        h1:hover {
+            transform: scale(1.1);
+            color: #a32050;
+        }
+        p {
+            font-size: 16px;
+            color: #333;
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        p:hover {
+            transform: translateX(5px);
+            color: #a32050;
+        }
+        .slider-container {
+            margin: 20px 0;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: #d6336c;
+            transition: transform 0.2s;
+        }
+        input[type="range"]:hover {
+            transform: scale(1.05);
+        }
+        .btn {
+            background: #d6336c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            background: #a32050;
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to the MythBuster Quiz!</h1>
+        <p>Let's challenge myths and taboos related to menstruation. Adjust the slider to choose the number of questions and click 'Start Quiz' to begin!</p>
+
+        <input type="range" id="numQuestions" min="1" max="50" step="1" value="5" oninput="updateValue()">
+        <p>Questions: <span id="numValue">5</span></p>
+        <button class="btn" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <script>
+        function updateValue() {
+            document.getElementById("numValue").innerText = document.getElementById("numQuestions").value;
+        }
+        function startQuiz() {
+        let numQuestions = document.getElementById("numQuestions").value;
+        let targetUrl = `/main?num=${numQuestions}`;
+        window.location.href = targetUrl;
+
+    }
+    </script>
+
+</body>
+</html>
