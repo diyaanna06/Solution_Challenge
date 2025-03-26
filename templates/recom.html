@@ -18,37 +18,43 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             color:white;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
             padding: 0;
 
-background-image: url(https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+background-image: url(https://img.freepik.com/free-photo/pink-school-tools-colored-surface_23-2148194645.jpg?t=st=1743017251~exp=1743020851~hmac=73fa719313b984f7cf81b47ac5360a8d9c3c68e61b9ad24e5c3421dbbede3df9&w=1380);
             font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
             min-height: 100vh;
         }
         
         .header {
-            color:white;
+            color:whitesmoke;
             padding: 2rem 0;
             text-align: center;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
             margin-bottom: 2rem;
         }
         
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow:black 5px 6px 4px;
+        }
+        h2{
+            color:rgb(39, 4, 4);
+            text-shadow: white 2px 2px 2px;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            margin-top: 50px;
+
         }
         
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
         }
         
@@ -56,10 +62,14 @@ background-image: url(https://images.unsplash.com/photo-1513185041617-8ab03f83d6
             background: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            margin: 0 0.5rem;
-            border-radius: 50px;
+            height: 50px;
+            width: 250px;
+            margin: 0 5rem;
+            border-radius: 20px;
             cursor: pointer;
+            font-size: 1.3rem;
             font-weight: bold;
+            font-family:Georgia, 'Times New Roman', Times, serif;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -70,7 +80,7 @@ background-image: url(https://images.unsplash.com/photo-1513185041617-8ab03f83d6
         }
         
         .tab-button.active {
-            background: var(--secondary);
+            background:rgb(219, 94, 113);
             color: white;
         }
         
@@ -101,10 +111,10 @@ background-image: url(https://images.unsplash.com/photo-1513185041617-8ab03f83d6
         .skill-button {
             padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 15px;
             cursor: pointer;
 
-background-color: rgb(21, 1, 43);
+            background:rgb(219, 94, 113);
 
 box-shadow:#f6c23e 10px 10px 10px;
         color: white;
@@ -119,12 +129,12 @@ box-shadow:#f6c23e 10px 10px 10px;
         }
         
         .skill-button.selected {
-            background: var(--secondary);
+            background:#54060e;
         }
         
         #recommend-button {
             padding: 0.8rem 1.8rem;
-            background:brown;
+            background:rgb(153, 87, 98);
             color: white;
             border: none;
             border-radius: 50px;
@@ -137,9 +147,9 @@ box-shadow:#f6c23e 10px 10px 10px;
         }
         
         #recommend-button:hover {
-            background: var(--primary);
+            
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #dc3545;
         }
         
         #results {
@@ -150,7 +160,7 @@ box-shadow:#f6c23e 10px 10px 10px;
         }
         
         .program-box {
-            background: white;
+            background:rgb(233, 229, 223);
             padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -164,22 +174,22 @@ box-shadow:#f6c23e 10px 10px 10px;
         
         .program-box h3 {
             margin: 0 0 0.8rem;
-            color: var(--primary);
+            color:black;
         }
         
         .program-box p {
             font-size: 0.9rem;
-            color: var(--dark);
+            color:black;
             margin: 0.5rem 0;
         }
         
         .program-box a button {
-            background: var(--primary);
+            background:rgb(219, 94, 113);
             padding: 0.6rem 1.2rem;
             font-size: 0.9rem;
             margin-top: 1rem;
             border: none;
-            color: white;
+            color:black;
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s ease;
@@ -200,26 +210,31 @@ box-shadow:#f6c23e 10px 10px 10px;
         
         .scholarship-button {
             background: white;
-            background-color: rgb(21, 1, 43);
+            background:rgb(219, 94, 113);
             border: none;
-            color: white;
+            color:white;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            font-weight: bold;
             padding: 0.6rem 1.2rem;
             cursor: pointer;
-            border-radius: 50px;
+            border-radius: 15px;
             font-size: 0.9rem;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
         }
         
         .scholarship-button:hover {
             background: var(--primary);
-            color: white;
+            background-color: #dc3545;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         #scholarship-list {
             margin-top: 1.5rem;
+            color: black;
+            text-shadow: whitesmoke 1px 0.1px 0px;
         }
         
         .scholarship-box {
@@ -238,26 +253,30 @@ box-shadow:#f6c23e 10px 10px 10px;
         
         .scholarship-name {
             font-weight: bold;
-            color: var(--primary);
+            color:black;
+            text-shadow: whitesmoke 2px 2px 2px;
             font-size: 1.1rem;
             margin-bottom: 0.8rem;
         }
         
         .apply-button {
-            background: var(--primary);
+            background-color: #e4394a;
+
             color: white;
             border: none;
+            height: 20px;
+            width: 100px;
             padding: 0.6rem 1.2rem;
             cursor: pointer;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
         }
         
         .apply-button:hover {
-            background: var(--secondary);
+            background: #e6061c;
         }
 
         /* Career Guidance Styles */
@@ -291,15 +310,15 @@ box-shadow:#f6c23e 10px 10px 10px;
         }
         
         #career-input:focus {
-            border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
         
         #career-search-button {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
+            background:rgb(219, 94, 113);
+
             padding: 0 1.8rem;
             border-radius: 8px;
             font-size: 1rem;
@@ -334,7 +353,7 @@ box-shadow:#f6c23e 10px 10px 10px;
         }
         
         .career-card-header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background:rgb(181, 108, 119);
             color: white;
             padding: 1.2rem;
         }
@@ -346,7 +365,7 @@ box-shadow:#f6c23e 10px 10px 10px;
         .career-title {
             font-size: 1.3rem;
             margin: 0 0 0.5rem;
-            color: var(--dark);
+            color: white;
         }
         
         .career-salary {
