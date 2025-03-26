@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Quiz Questions</title>
+    <title>Welcome Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,7 +23,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             max-width: 400px;
-          
         }
         h1 {
             color: #d6336c;
@@ -75,12 +74,10 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>Welcome to the MythBuster Quiz!</h1>
         <p>Let's challenge myths and taboos related to menstruation. Adjust the slider to choose the number of questions and click 'Start Quiz' to begin!</p>
-
-        <input type="range" id="numQuestions" min="1" max="50" step="1" value="5" oninput="updateValue()">
+        <input type="range" id="numQuestions" min="1" max="40" step="1" value="5" oninput="updateValue()">
         <p>Questions: <span id="numValue">5</span></p>
         <button class="btn" onclick="startQuiz()">Start Quiz</button>
     </div>
@@ -91,11 +88,8 @@
         }
         function startQuiz() {
         let numQuestions = document.getElementById("numQuestions").value;
-        let targetUrl = `/main?num=${numQuestions}`;
-        window.location.href = targetUrl;
-
+        window.location.href = `/main?num=${numQuestions}`;
     }
     </script>
-
 </body>
 </html>

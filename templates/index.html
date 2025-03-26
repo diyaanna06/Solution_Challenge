@@ -202,6 +202,12 @@
         </div>
     </div>
 
+    
+          <button  id="quizbtn">Go to quiz</button>
+      
+  
+       
+
     <div class="content-section">
         <div class="content-box">Education</div>
         <div class="content-box">Health & Wellness</div>
@@ -232,6 +238,14 @@
             document.querySelector(".carousel").style.transform = `translateX(${-index * 100}%)`;
         }
         setInterval(showSlides, 3000);
+       
+
+document.getElementById("quizbtn").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevents any default behavior
+    window.location.href = "http://127.0.0.1:5000/welcome"; // Redirect to another page
+});
+
+
     </script>
 </body>
 </html>
