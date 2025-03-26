@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Hub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #1cc88a;
+            --info: #36b9cc;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+            --light: #f8f9fc;
+            --dark: #5a5c69;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color:white;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+
+background-image: url(https://images.unsplash.com/photo-1513185041617-8ab03f83d6c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+            min-height: 100vh;
+        }
+        
+        .header {
+            color:white;
+            padding: 2rem 0;
+            text-align: center;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab-button.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Mentorship Program Styles */
+        #skills-container {
+            margin: 2rem auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .skill-button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+
+background-color: rgb(21, 1, 43);
+
+box-shadow:#f6c23e 10px 10px 10px;
+        color: white;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .skill-button.selected {
+            background: var(--secondary);
+        }
+        
+        #recommend-button {
+            padding: 0.8rem 1.8rem;
+            background:brown;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 1rem 0;
+            margin-left: 500px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        #recommend-button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #results {
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .program-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .program-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .program-box h3 {
+            margin: 0 0 0.8rem;
+            color: var(--primary);
+        }
+        
+        .program-box p {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin: 0.5rem 0;
+        }
+        
+        .program-box a button {
+            background: var(--primary);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .program-box a button:hover {
+            background: var(--secondary);
+        }
+        
+        /* Scholarship Finder Styles */
+        .scholarship-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scholarship-button {
+            background: white;
+            background-color: rgb(21, 1, 43);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scholarship-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #scholarship-list {
+            margin-top: 1.5rem;
+        }
+        
+        .scholarship-box {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .scholarship-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scholarship-name {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .apply-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-button:hover {
+            background: var(--secondary);
+        }
+
+        /* Career Guidance Styles */
+        .career-search {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .career-search:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        #career-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        #career-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        #career-search-button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0 1.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #career-search-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .career-results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            color: black;
+        }
+        
+        .career-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .career-card-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.2rem;
+        }
+        
+        .career-card-body {
+            padding: 1.5rem;
+        }
+        
+        .career-title {
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem;
+            color: var(--dark);
+        }
+        
+        .career-salary {
+            color: var(--info);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        
+        .career-description {
+            color:black;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .career-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .career-skill-tag {
+            background: #e9ecef;
+            color:black;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+        
+        .career-action-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color:black;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .career-action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            color: black;
+        }
+        
+        .ai-risk-low { color: #28a745; }
+        .ai-risk-medium { color: #ffc107; }
+        .ai-risk-high { color: #dc3545; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="header animate__animated animate__fadeInDown">
+        <h1>Education Hub</h1>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('mentorship')">Mentorship</button>
+        <button class="tab-button" onclick="openTab('scholarships')">Scholarships</button>
+        <button class="tab-button" onclick="openTab('career')">Career Guidance</button>
+    </div>
+    
+    <div class="content-container">
+        <!-- Mentorship Programs Tab -->
+        <div id="mentorship" class="tab-content active">
+            <h2 class="animate__animated animate__fadeIn">Find Mentorship Programs</h2>
+            
+            <div id="skills-container">
+                <!-- Skill buttons will be populated dynamically -->
+            </div>
+
+            <button id="recommend-button" class="animate__animated animate__pulse animate__infinite" onclick="fetchRecommendations()">Get Recommendations</button>
+
+            <div id="results"></div>
+        </div>
+        
+        <!-- Scholarship Finder Tab -->
+        <div id="scholarships" class="tab-content">
+            <h2 class="animate__animated animate__fadeIn">Find Scholarships</h2>
+            <div class="scholarship-buttons">
+                <button class="scholarship-button" onclick="fetchScholarships('Primary Education')">Primary Education</button>
+                <button class="scholarship-button" onclick="fetchScholarships('Secondary Education')">Secondary Education</button>
+                <button class="scholarship-button" onclick="fetchScholarships('Higher Secondary')">Higher Secondary</button>
+                <button class="scholarship-button" onclick="fetchScholarships('Undergraduate')">Undergraduate</button>
+                <button class="scholarship-button" onclick="fetchScholarships('Postgraduate')">Postgraduate</button>
+            </div>
+            <div id="scholarship-list"></div>
+        </div>
+        
+        <!-- Career Guidance Tab -->
+        <div id="career" class="tab-content">
+            <h2 class="animate__animated animate__fadeIn">Career Guidance</h2>
+            
+            <div class="career-search animate__animated animate__fadeIn">
+                <div class="search-box">
+                    <input type="text" id="career-input" placeholder="Enter your interests/skills">
+                    <button id="career-search-button">Get Career Advice</button>
+                </div>
+            </div>
+            
+            <div class="career-results-container" id="career-results">
+                <!-- Career cards will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+        
+        // Mentorship Programs Code
+        let selectedSkills = new Set();
+
+        async function fetchSkills() {
+            try {
+                let response = await fetch("http://127.0.0.1:5000/get_unique_skills");
+                let skills = await response.json();
+
+                let container = document.getElementById("skills-container");
+                skills.forEach(skill => {
+                    let btn = document.createElement("button");
+                    btn.classList.add("skill-button", "animate__animated", "animate__fadeIn");
+                    btn.textContent = skill;
+                    btn.onclick = () => toggleSkill(skill, btn);
+                    container.appendChild(btn);
+                });
+            } catch (error) {
+                console.error("Error fetching skills:", error);
+            }
+        }
+
+        function toggleSkill(skill, button) {
+            if (selectedSkills.has(skill)) {
+                selectedSkills.delete(skill);
+                button.classList.remove("selected");
+                button.classList.add("animate__animated", "animate__headShake");
+                setTimeout(() => button.classList.remove("animate__headShake"), 1000);
+            } else {
+                selectedSkills.add(skill);
+                button.classList.add("selected", "animate__animated", "animate__bounce");
+                setTimeout(() => button.classList.remove("animate__bounce"), 1000);
+            }
+        }
+
+        async function fetchRecommendations() {
+            if (selectedSkills.size === 0) {
+                alert("Please select at least one skill.");
+                return;
+            }
+
+            try {
+                let response = await fetch("http://127.0.0.1:5000/get_recommendations", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ skills: Array.from(selectedSkills) })
+                });
+
+                let recommendations = await response.json();
+                displayRecommendations(recommendations);
+            } catch (error) {
+                console.error("Error fetching recommendations:", error);
+            }
+        }
+
+        function displayRecommendations(recommendations) {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+
+            if (recommendations.length === 0) {
+                resultsDiv.innerHTML = `<p class="animate__animated animate__fadeIn">No programs found matching your selected skills.</p>`;
+                return;
+            }
+
+            recommendations.forEach((program, index) => {
+                const div = document.createElement("div");
+                div.classList.add("program-box", "animate__animated", "animate__fadeIn");
+                div.style.animationDelay = `${index * 0.1}s`;
+
+                const websiteLink = program["Website"] ? `
+                    <a href="${program["Website"]}" target="_blank">
+                        <button class="animate-pop">Visit Program</button>
+                    </a>` : "<p>No website available</p>";
+
+                div.innerHTML = `
+                    <h3>${program["Program Name"]}</h3>
+                    <p><strong>Skills:</strong> ${program["Skills"]}</p>
+                    ${websiteLink}
+                `;
+
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        // Scholarship Finder Code
+        async function fetchScholarships(level) {
+            const response = await fetch("scholarships_final.csv");
+            const arrayBuffer = await response.arrayBuffer();
+
+            const workbook = XLSX.read(arrayBuffer, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const data = XLSX.utils.sheet_to_json(sheet);
+
+            const filteredData = data.filter(s => s["Minimum Education Qualification"] === level);
+
+            displayScholarships(filteredData, level);
+        }
+
+        function displayScholarships(scholarships, level) {
+            const container = document.getElementById("scholarship-list");
+            container.innerHTML = `<h3 class="animate__animated animate__fadeIn">Scholarships for ${level}</h3>`;
+
+            if (scholarships.length === 0) {
+                container.innerHTML += `<p class="animate__animated animate__fadeIn">No scholarships available for this level.</p>`;
+                return;
+            }
+
+            scholarships.forEach((scholarship, index) => {
+                const div = document.createElement("div");
+                div.classList.add("scholarship-box", "animate__animated", "animate__fadeIn");
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.innerHTML = `
+                    <div class="scholarship-name">${scholarship["Scholarship Name"]}</div>
+                    <a href="${scholarship.Link}" target="_blank" class="apply-button animate-pop">Apply Now</a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Career Guidance Code
+        document.getElementById('career-search-button').addEventListener('click', async () => {
+            const interests = document.getElementById('career-input').value.trim();
+            if (!interests) {
+                alert('Please enter your interests');
+                return;
+            }
+
+            const resultsContainer = document.getElementById('career-results');
+            resultsContainer.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch('http://localhost:5000/get-career-advice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ interests })
+                });
+
+                const data = await response.json();
+
+                if (!data.careers || !Array.isArray(data.careers)) {
+                    throw new Error('Invalid data format received');
+                }
+
+                let html = '';
+                data.careers.forEach((career, index) => {
+                    html += `
+                    <div class="career-card animate-fade" style="animation-delay: ${index * 0.1}s">
+                        <div class="career-card-header">
+                            <h3 class="career-title">${career.name}</h3>
+                            <span class="career-salary">${career.salary}</span>
+                        </div>
+                        <div class="career-card-body">
+                            <p class="career-description">${career.summary}</p>
+                            <div class="career-skills">
+                                ${career.skills.map(skill => `<span class="career-skill-tag">${skill}</span>`).join('')}
+                            </div>
+                            <p><strong>Growth Outlook:</strong> ${career.growth}</p>
+                            <p><strong>AI Impact:</strong> <span class="ai-risk-${career.ai_risk.toLowerCase()}">${career.ai_risk}</span></p>
+                        </div>
+                    </div>`;
+                });
+
+                resultsContainer.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultsContainer.innerHTML = `<div class="career-card" style="color: var(--danger);">Error: ${error.message}</div>`;
+            }
+        });
+
+        // Load skills on page load
+        window.onload = function() {
+            fetchSkills();
+            
+            // Add animation to tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach((button, index) => {
+                button.style.animationDelay = `${index * 0.1}s`;
+                button.classList.add('animate__animated', 'animate__fadeIn');
+            });
+        };
+    </script>
+</body>
+</html>
