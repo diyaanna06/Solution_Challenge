@@ -10,18 +10,18 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #F0F2F5;
+            background-color: #fbdeeb;
             overflow-x: hidden;
             color: #222;
         }
 
         /* Header */
         header {
-            background: #1E3A5F; /* Dark Blue */
+            background: #e13275; 
             color: white;
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             position: relative;
         }
@@ -30,47 +30,36 @@
         .nav-bar {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            background: #2F4F75; /* Deep Blue */
-            padding: 15px;
-            font-size: 1rem;
-        }
-        .nav-bar a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-        .nav-bar a:hover {
-            background: #1E3A5F;
+           
+            background:  #f4b3cc; /* Deep Blue */
+          
+   /* Pull it even closer to the header */
+    /* Reduce line height for better compactness */
+            font-family:'Poppins', sans-serif ;
+            font-size: 1.2rem;
+            color:  #e13275;
         }
 
         /* Sidebar */
         .menu-icon {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            left:10px;
             font-size: 20px;
             cursor: pointer;
             color: white;
-            background: #1E3A5F;
-            padding: 10px;
+           
+            padding: 20px;
             border-radius: 5px;
             transition: 0.3s;
         }
-        .menu-icon:hover {
-            background: #14273E;
-        }
-
+     
         .sidebar {
             position: fixed;
             left: -250px;
             top: 0;
             width: 250px;
             height: 100%;
-            background: #1A2E46; /* Darker Navy */
+            background:  #e13275; /* Darker Navy */
             padding-top: 20px;
             transition: 0.5s;
             z-index: 1000;
@@ -83,12 +72,7 @@
             font-size: 1.2rem;
             transition: 0.3s;
         }
-        .sidebar a:hover {
-            background: #2F4F75;
-        }
-        .sidebar.active {
-            left: 0;
-        }
+     
 
         .overlay {
             display: none;
@@ -107,7 +91,7 @@
         /* Slideshow */
         .slideshow-container {
             position: relative;
-            width: 100%;
+            width: 60%;
             height: 80vh;
             display: flex;
             justify-content: center;
@@ -117,8 +101,9 @@
 
         .carousel {
             display: flex;
-            width: 400%;
-            transition: transform 1s ease-in-out;
+            width: 100%;
+            height:100%;
+            transition: transform ease-in-out;
         }
 
         .slides {
@@ -127,6 +112,40 @@
             object-fit: cover;
             flex-shrink: 0;
         }
+/* sos button*/
+/* Navbar Styling */
+
+/* 🔥 Helpline Button Styling */
+.sos-button {
+    background: #ff0000; /* Emergency Red */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
+    cursor: pointer;
+    
+    /* Positioning in Navbar */
+    position: absolute;
+    right: 30px; /* Pushes button to the right */
+    top: 125px; 
+    transform: translateY(-50%); /* Centers vertically */
+}
+
+/* 🚀 Hover & Active Effects */
+.sos-button:hover {
+    background: #cc0000; /* Darker Red */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.05); /* Slightly enlarges on hover */
+}
+
+
 
         /* Content Boxes */
         .content-section {
@@ -160,32 +179,46 @@
 
         /* Footer */
         .footer {
-            background: #1A2E46; /* Dark Blue */
+            background:  #e13275; /* Dark Blue */
             color: white;
             text-align: center;
             padding: 1.5rem;
             font-size: 1rem;
             font-weight: bold;
             width: 100%;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+            
         }
+      /* 🔥 Logo Styling */
+.logo {
+    width: 60px; /* Adjust size as needed */
+    height: 60px; /* Maintain square dimensions */
+    border-radius: 50%; /* Makes it circular */
+    object-fit: cover; /* Ensures the image fits properly */
+    border: 2px solid white; /* Optional: White border for a polished look */
+
+    /* Positioning */
+    position: absolute;
+    left: 20px; /* Adjust distance from right */
+    top: 50%;
+    transform: translateY(-50%); /* Centers it vertically */
+}
+
     </style>
 </head>
 <body>
     <header>
-        <span class="menu-icon" onclick="toggleSidebar()">☰</span>
-        Women's Empowerment
+        <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" >
+        Women Empowerment
     </header>
 
     <nav class="nav-bar">
-        <a href="#">Education</a>
-        <a href="#">Health</a>
-        <a href="#">Leadership</a>
-        <a href="#">Entrepreneurship</a>
-        <a href="#">Safety & Rights</a>
-        <a href="#">Community Support</a>
+        <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+        <p>Made by Women, Made for Change</p>
+        <a href="https://wcdhry.gov.in/women-helpline-number-181/#:~:text=Helpline%20Number%20181-,Women%20Helpline%20Number%20181,through%20a%20single%20uniform%20number." 
+           target="_blank" class="sos-button">Helpline
+        </a>
     </nav>
-
+    
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <a href="#">About</a>
@@ -193,16 +226,20 @@
         <a href="#">Contact</a>
     </div>
 
+
     <div class="slideshow-container">
         <div class="carousel">
             <img class="slides" src="https://images.unsplash.com/photo-1547937084-4d587301a545?q=80&w=2070&auto=format&fit=crop" alt="Slide 1">
             <img class="slides" src="https://images.unsplash.com/photo-1633329712165-4e578376eb87?q=80&w=2070&auto=format&fit=crop" alt="Slide 2">
             <img class="slides" src="https://images.unsplash.com/photo-1467307983825-619715426c70?q=80&w=1977&auto=format&fit=crop" alt="Slide 3">
-            <img class="slides" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2000&auto=format&fit=crop" alt="Slide 4">
+            <img class="slides" src="https://i.pinimg.com/736x/6f/cd/03/6fcd037674b88e4ec150871ff1d746a9.jpg" alt="Slide 4">
+    
+    
         </div>
+        
     </div>
 
-    
+  
           <button  id="quizbtn">Go to quiz</button>
       
   
