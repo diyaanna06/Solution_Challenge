@@ -565,7 +565,7 @@ box-shadow:#f6c23e 10px 10px 10px;
 
         // Scholarship Finder Code
         async function fetchScholarships(level) {
-            const response = await fetch("scholarships_final.csv");
+            const response = await fetch("/static/scholarships_final.csv");
             const arrayBuffer = await response.arrayBuffer();
 
             const workbook = XLSX.read(arrayBuffer, { type: "array" });

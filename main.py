@@ -22,6 +22,9 @@ CORS(app)
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 model = genai.GenerativeModel("gemini-2.0-flash")
+@app.route('/recom')
+def recom():
+    return render_template('recom.html')
 
 @app.route("/get-career-advice", methods=["POST"])
 def career_advice():
