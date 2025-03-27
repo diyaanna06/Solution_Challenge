@@ -189,6 +189,64 @@ def result():
     final_score = request.args.get("score", type=int)
     total_questions = request.args.get("total", type=int)
     return render_template("result.html", score=final_score, total=total_questions)
+
+# ========================== PAY PARITY ==========================
+# Load CSV files
+df1 = pd.read_csv("salary1.csv")
+df2 = pd.read_csv("salary2.csv")
+salary_data = pd.concat([df1, df2])  # Combine both CSVs
+
+@app.route('/')
+def home():
+    return render_template("paygap.html")
+
+@app.route("/get_salary", methods=['POST'])
+def get_salary():
+    try:
+        data = request.json
+        print("Received data:", data)  # Debugging step
+
+        if not data:
+            return jsonify({"error": "No data received"}), 400
+
+        # Extract and normalize inputs
+        job = str(data.get("job", "")).strip().lower()
+        location = str(data.get("location", "")).strip().lower()
+        experience = int(data.get("experience", 0))  # Default to 0 if not provided
+        user_salary = float(data.get("user_salary", 0))  # User's entered salary
+
+        # Filter data
+        filtered_data = salary_data[
+            (salary_data["job"].str.lower() == job) &
+            (salary_data["location"].str.lower() == location)
+        ]
+
+        if filtered_data.empty:
+            return jsonify({"salary": "No data available"}), 404
+
+        # Compute average salary
+        avg_salary = filtered_data["salary"].mean()
+        
+        # Calculate percentage difference
+        if user_salary > 0:  # Ensure valid salary is provided
+            percentage_difference = ((user_salary - avg_salary) / avg_salary) * 100
+            percentage_difference = round(percentage_difference, 2)
+
+            if percentage_difference > 0:
+                comparison_message = f"Your salary is {percentage_difference}% above the estimated salary! 🎉"
+            else:
+                comparison_message = f"Your salary is {abs(percentage_difference)}% below the estimated salary. Keep working hard! 💪"
+        else:
+            comparison_message = "No valid user salary provided."
+
+        return jsonify({
+            "salary": round(avg_salary, 2),
+            "comparison": comparison_message
+        })
+
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({"error": "Internal Server Error"}), 500
 # ========================== RUN FLASK APP ==========================
 
 """ quiz flask running
