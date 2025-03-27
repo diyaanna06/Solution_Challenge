@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayParity</title>
+    <style>
+        body {    
+            background-image: url('/static/background6040.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header Styling */
+        .header {
+            width: 100%;
+            background: rgb(11, 0, 47);
+            color: white;
+            padding: 15px 30px;
+            font-size: 48px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            padding: 30px;
+            justify-content: space-between
+        }
+
+        /* Form Container */
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            width: 40%;
+            text-align: center;
+        }
+
+        h2 {
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            color: black;
+        }
+
+        input, select {
+            width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.05);
+            margin-top: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: rgb(11, 0, 47);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: rgb(65, 74, 243);
+        }
+
+        
+        .result-card {
+    background: #dcdcdc;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+    max-width: 90%;
+}
+
+/* Different Salary Scenarios */
+.high-salary { border-left: 5px solid green; color: green; }
+.low-salary { border-left: 5px solid red; color: red; }
+.neutral { border-left: 5px solid gray; color: black; }
+
+/* Salary Text Colors */
+.salary { font-size: 20px; font-weight: bold; color: #333; }
+.above-salary { color: green; font-weight: bold; }
+.below-salary { color: red; font-weight: bold; }
+
+/* Fade-in Animation */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">PayParity</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Left: Form -->
+    <div class="container">
+        <h2>Is Your Salary Competitive by Market Standards?</h2>
+        <form id="salary-form">
+            <label for="company">Company Name</label>
+            <input type="text" id="company" placeholder="e.g., Google" required>
+        
+            <label for="job">Role in Organization</label>
+            <select id="job" required>
+                <option value="">-- Select Job Role --</option>
+                <option value="Android Developer">Android Developer</option>
+                <option value="Android Software Engineer">Android Software Engineer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Database Administrator">Database Administrator</option>
+                <option value="Database Developer">Database Developer</option>
+                <option value="Front End Developer">Front End Developer</option>
+                <option value="Java Developer">Java Developer</option>
+                <option value="Python Developer">Python Developer</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Web Developer">Web Developer</option>
+                <option value="Software Development Engineer(SDE)">Software Development Engineer(SDE)</option>
+                <option value="Test Engineer">Test Engineer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="Data Analyst">Data Analyst</option>
+                <option value="Data Engineer">Data Engineer</option>
+                <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+            </select>
+
+            <label for="location">Location</label>
+            <select id="location" required>
+                <option value="">-- Select Location --</option>
+                <option value="New Delhi">New Delhi</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Chennai">Chennai</option>
+            </select>
+        
+            <label for="experience">Years of experience</label>
+            <input type="number" id="experience" placeholder="e.g., 15" required>
+        
+            <label for="user_salary">Your Current Salary (annual in ₹)</label>
+            <input type="number" id="user_salary" placeholder="e.g., 100000" required>
+        
+            <button type="submit">Compare Salary</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+<script>
+   
+   document.getElementById("salary-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    let job = document.getElementById("job").value.trim();
+    let location = document.getElementById("location").value.trim();
+    let experience = parseInt(document.getElementById("experience").value, 10) || 0; // Default to 0 if empty
+    let user_salary = parseFloat(document.getElementById("user_salary").value) || 0; // Default to 0 if empty
+
+    let resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = `<p>Fetching salary data... ⏳</p>`; // Show loading state
+    resultDiv.style.display = "block";
+
+    if (!job || !location || user_salary <= 0) {
+        resultDiv.innerHTML = `<p style="color:red;">⚠️ Please enter all fields correctly.</p>`;
+        return;
+    }
+
+    // Append "Senior" if experience is 10+ years
+    if (experience >= 10) {
+        job = `Senior ${job}`;
+    }
+
+    try {
+        let response = await fetch("http://127.0.0.1:5000/get_salary", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ job, location, experience, user_salary })
+        });
+
+        let data = await response.json();
+        console.log("Received response:", data); // Debugging step
+
+        if (data.salary) {
+            // Format salary properly with commas
+            let formattedSalary = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(data.salary);
+            
+            let salaryDifference = ((user_salary - data.salary) / data.salary) * 100;
+            let salaryMessage = "";
+            let colorClass = "neutral"; // Default class
+
+            if (salaryDifference < -10) {
+                salaryMessage = `⚠️ Your salary is <span class="below-salary">${Math.abs(salaryDifference).toFixed(1)}% below</span> the estimated salary. Please consider negotiating for fair pay! 💪`;
+                colorClass = "low-salary";
+            } else if (salaryDifference > 10) {
+                salaryMessage = `🎉 Your salary is <span class="above-salary">${salaryDifference.toFixed(1)}% above</span> the estimated salary. Great job! 🚀`;
+                colorClass = "high-salary";
+            } else {
+                salaryMessage = `✅ Your salary is in line with market standards.`;
+                colorClass = "neutral";
+            }
+
+            resultDiv.innerHTML = `
+                <div class="result-card ${colorClass}">
+                    <p><strong>Estimated Salary:</strong> <span class="salary">${formattedSalary}</span> 💰</p>
+                    <p>${salaryMessage}</p>
+                </div>
+            `;
+
+            // Add fade-in animation
+            resultDiv.classList.add("fade-in");
+        } else {
+            resultDiv.innerHTML = `<p>❌ No salary data available.</p>`;
+        }
+
+    } catch (error) {
+        console.error("Error fetching salary data:", error);
+        resultDiv.innerHTML = `<p style="color:red;">❌ Error fetching salary data. Try again later.</p>`;
+    }
+});
+
+</script>
+
+
+</body>
+</html>
