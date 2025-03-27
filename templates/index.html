@@ -240,7 +240,8 @@
     </div>
 <button  id="quizbtn">Go to quiz</button>
 <button  id="recobtn">Go to recommendation</button>
-
+<button  id="paybtn">Go to PayParity</button>
+    
     <div class="content-section">
         <div class="content-box">Education</div>
         <div class="content-box">Health & Wellness</div>
@@ -281,7 +282,10 @@ document.getElementById("recobtn").addEventListener("click", function(event) {
     event.preventDefault(); // Prevents any default behavior
     window.location.href = "http://127.0.0.1:5000/recom"; // Redirect to another page
 });
-
+document.getElementById("paybtn").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevents any default behavior
+    window.location.href = "http://127.0.0.1:5000/get_salary"; // Redirect to another page
+});
 
     </script>
 </body>
