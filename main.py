@@ -235,7 +235,7 @@ def get_salary():
             if percentage_difference > 0:
                 comparison_message = f"Your salary is {percentage_difference}% above the estimated salary! 🎉"
             else:
-                comparison_message = f"Your salary is {abs(percentage_difference)}% below the estimated salary. Keep working hard! 💪"
+                comparison_message = f"Your salary is {abs(percentage_difference)}% below the estimated salary. Please consider negotiating for fair pay! 💪"
         else:
             comparison_message = "No valid user salary provided."
 
