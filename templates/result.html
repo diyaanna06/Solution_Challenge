@@ -48,9 +48,16 @@
         margin-left: auto;
         margin-right: auto;
 }
+
         .button:hover {
             background-color: darkred;
         } 
+        .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
     </style>
 </head>
 <body>
@@ -58,8 +65,9 @@
     <div class="result-box">
         <p class="score" style="text-align: center;">Your Score : <span id="score"></span> / <span id="total"></span></p>
         <div id="questions-container"></div> 
-         <button class="button" onclick="retryQuiz()">Try Again</button> 
-         <button class="button" onclick="gotoHome()">Exit Quiz</button> 
+        <div class="button-container"> <button class="button" onclick="retryQuiz()">Try Again</button> 
+            <button class="button" onclick="gotoHome()">Exit Quiz</button> </div>
+        
     </div>
     <script>
      document.addEventListener("DOMContentLoaded", function () {
