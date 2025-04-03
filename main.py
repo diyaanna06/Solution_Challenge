@@ -22,6 +22,9 @@ CORS(app)
 # Configure Gemini API
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 model = genai.GenerativeModel("gemini-2.0-flash")
+genai.configure(api_key=os.getenv("API_KEY"))
+model2 = genai.GenerativeModel("gemini-2.0-flash")
+
 @app.route('/recom')
 def recom():
     return render_template('recom.html')
@@ -136,9 +139,32 @@ df = pd.read_csv("questions.csv")
 @app.route('/')
 def home():
     return render_template('index.html')
+@app.route("/chat")
+def serve_frontend():
+    return render_template("merin.html")
+
 @app.route('/welcome')
 def welcome():
     return render_template('welcome.html')
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    data = request.json
+    user_input = data.get("message", "").strip()
+
+    if not user_input:
+        return jsonify({"error": "Empty message"}), 400
+
+    system_prompt = (
+        "You are a legal expert specializing in Female Foeticide Laws in India. "
+        "Provide accurate, legally sound, and fact-based responses. "
+        "Cite relevant sections of the PCPNDT Act and Indian Penal Code when necessary. "
+        "Ensure responses are in a simple, understandable format."
+    )
+
+    response = model.generate_content(f"{system_prompt}\n\nUser: {user_input}\nBot:")
+
+    return jsonify({"response": response.text})
 
 @app.route('/main')
 def main():

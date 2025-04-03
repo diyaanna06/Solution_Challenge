@@ -239,6 +239,7 @@
         
     </div>
 <button  id="quizbtn">Go to quiz</button>
+<button  id="chatbtn">Go to chat</button>
 <button  id="recobtn">Go to recommendation</button>
 <button  id="paybtn">Go to PayParity</button>
     
@@ -274,6 +275,10 @@
         setInterval(showSlides, 3000);
        
 
+document.getElementById("chatbtn").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevents any default behavior
+    window.location.href = "http://127.0.0.1:5000/chat"; // Redirect to another page
+});
 document.getElementById("quizbtn").addEventListener("click", function(event) {
     event.preventDefault(); // Prevents any default behavior
     window.location.href = "http://127.0.0.1:5000/welcome"; // Redirect to another page
