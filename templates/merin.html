@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: url('/background.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #ff66b2, #cc0088);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .chat-icon {
+            width: 30px;
+        }
+
+        #chat-box { 
+            width: 100%;
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .user-message { 
+            background: rgba(255, 255, 255, 0.8);
+            color: #ff0080;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 5px 0;
+        }
+
+        .bot-message { 
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 5px 0;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        input { 
+            flex: 1; 
+            padding: 12px; 
+            border: none;
+            border-radius: 10px 0 0 10px;
+            font-size: 14px;
+        }
+
+        button { 
+            background: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #ff0080;
+            border-radius: 0 10px 10px 0;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ffccff;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="/chat-icon.png" alt="Chat Icon" class="chat-icon">
+            <h2>Legal Chatbot</h2>
+        </div>
+        <div id="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="question" placeholder="Type your question...">
+            <button onclick="askChatbot()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        async function askChatbot() {
+            const questionInput = document.getElementById("question");
+            const chatBox = document.getElementById("chat-box");
+
+            if (!questionInput.value.trim()) {
+                alert("Please enter a question.");
+                return;
+            }
+
+            const userMessage = document.createElement("p");
+            userMessage.classList.add("user-message");
+            userMessage.innerText = "You: " + questionInput.value;
+            chatBox.appendChild(userMessage);
+
+            try {
+                const res = await fetch("/chat", { 
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: questionInput.value }),
+                });
+
+                if (!res.ok) {
+                    throw new Error("Failed to get a response.");
+                }
+
+                const data = await res.json();
+                const botMessage = document.createElement("p");
+                botMessage.classList.add("bot-message");
+                botMessage.innerText = "Bot: " + (data.response || "No response received.");
+                chatBox.appendChild(botMessage);
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while fetching response.");
+            }
+
+            questionInput.value = "";
+        }
+    </script>
+</body>
+</html>
