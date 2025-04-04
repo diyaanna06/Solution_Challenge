@@ -342,7 +342,8 @@
         });
         document.getElementById("quizbtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
-            window.location.href = "http://127.0.0.1:5000/welcome"; // Redirect to another page
+            window.location.href = "{{ url_for('welcome', _external=True) }}";
+            // Redirect to another page
         });
         document.getElementById("recobtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
