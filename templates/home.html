@@ -25,33 +25,33 @@
             position: relative;
         }
         .logo {
-            width: 60px; /* Adjust size as needed */
-            height: 60px; /* Maintain square dimensions */
-            border-radius: 50%; /* Makes it circular */
-            object-fit: cover; /* Ensures the image fits properly */
-            border: 2px solid white; /* Optional: White border for a polished look */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
             position: absolute;
-            left: 20px; /* Adjust distance from right */
+            left: 20px;
             top: 50%;
-            transform: translateY(-50%); /* Centers it vertically */
+            transform: translateY(-50%);
         }
         .nav-bar {
             display: flex;
+            align-items: center;
             justify-content: center;
-            background:  #f8f8f7;
-            font-family:'Poppins', sans-serif ;
+            background: #f8f8f7;
+            font-family: 'Poppins', sans-serif;
             font-size: 1.2rem;
-            color:  #e13275;
+            color: #e13275;
+            padding: 10px 0;
+            position: relative;
         }
         .menu-icon {
             position: absolute;
-            left:10px;
-            font-size: 20px;
+            left: 20px;
+            font-size: 24px;
             cursor: pointer;
-            color: rgb(12, 1, 1);
-            padding: 20px;
-            border-radius: 5px;
-            transition: 0.3s;
+            color: #e13275;
         }
         .sidebar {
             position: fixed;
@@ -59,10 +59,13 @@
             top: 0;
             width: 250px;
             height: 100%;
-            background:  #e13275; 
-            padding-top: 20px;
-            transition: 0.5s;
+            background: #e13275;
+            padding-top: 60px;
+            transition: 0.3s ease;
             z-index: 1000;
+        }
+        .sidebar.active {
+            left: 0;
         }
         .sidebar a {
             display: block;
@@ -71,6 +74,9 @@
             text-decoration: none;
             font-size: 1.2rem;
             transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #d02565;
         }
         .overlay {
             display: none;
@@ -97,7 +103,7 @@
         .carousel {
             display: flex;
             width: 100%;
-            height:100%;
+            height: 100%;
             transition: transform ease-in-out;
         }
         .slides {
@@ -107,7 +113,7 @@
             flex-shrink: 0;
         }
         .sos-button {
-            background: #ff0000; 
+            background: #ff0000;
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
@@ -121,14 +127,51 @@
             box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
             cursor: pointer;
             position: absolute;
-            right: 30px; /* Pushes button to the right */
-            top: 125px; 
-            transform: translateY(-50%); /* Centers vertically */
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .sos-button:hover {
-            background: #cc0000; /* Darker Red */
+            background: #cc0000;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-            transform: translateY(-50%) scale(1.05); /* Slightly enlarges on hover */
+            transform: translateY(-50%) scale(1.05);
+        }
+        .content-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 20px;
+        }
+        .quote-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .quote-box {
+            background: #fce7e8;
+            border-left: 5px solid #d63384;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            font-family: "Poppins", sans-serif;
+            color: #5a1a5e;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .quote-text {
+            font-size: 20px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            color: #641d69;
+            text-align: center;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        #quote2 .quote-text {
+            color: #641d69;
+            font-style: italic;
+            font-family: "Courier New", monospace;
         }
         .content-section {
             display: grid;
@@ -144,120 +187,65 @@
             color: #1A2E46;
             display: flex;
             padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: auto;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
             border-radius: 12px;
-            transition: transform 0.3s, background 0.3s;
+            text-align: center;
             box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s, background 0.3s;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
-        
-            .content-box h2 {
-                color: #1A2E46;
-                font-size: 24px;
-                margin-bottom: 10px;
-            }
-
-            .content-box p {
-                font-size: 20px;
-                color: #ffffff;
-                margin-bottom: 20px;
-            }
-
-            .quote-text {
-                font-size: 20px;
-                font-family: "Poppins", sans-serif;
-                
-                font-weight: 500;
-                color: #641d69;
-                text-align: center;
-                line-height: 1.6;
-                word-wrap: break-word;
-            }
-            #quote2 .quote-text{
-                color:#641d69;
-                font-style: italic;
-                font-family: "Courier New", monospace;
-            }
-            .content-box:hover {
-                transform: scale(1.08);
-                cursor: pointer;
-            }
-        
-            .quote-container {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                gap: 15px; /* Space between boxes */
-            }
-            .quote-box {
-                background: #fce7e8;
-                border-left: 5px solid #d63384;
-                border-radius: 12px;
-                padding: 15px;
-                text-align: center;
-                font-family: "Poppins", sans-serif;
-            
-                color: #5a1a5e;
-                box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
-            }
-            .redirectbtn {
-                background-color:  rgb(255, 254, 255);/* Vibrant pink */
-                color:  #1A2E46;
-                border: none;
-                padding: 10px 20px;
-                font-size: 16px;
-                border-radius: 8px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            .redirectbtn:hover {
-                background-color:  rgb(244, 214, 244);/* Darker pink */
-                
-            }
-
-           
-
-            .footer {
-                background:  #e13275; /* Dark Blue */
-                color: white;
-                text-align: center;
-                padding: 1.5rem;
-                font-size: 1rem;
-                font-weight: bold;
-                width: 100%;
-            
-            }
-            .content-wrapper {
-                display: flex;            /* Lay out children side by side */
-                align-items: flex-start;  /* Align them at the top (or center if you prefer) */
-                gap: 20px;                /* Space between the image and the quote */
-                margin: 20px;             /* Some outer spacing */
-            }
+        .content-box:hover {
+            transform: scale(1.08);
+            cursor: pointer;
+        }
+        .content-box h2 {
+            color: #1A2E46;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .content-box p {
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .redirectbtn {
+            background-color: rgb(255, 254, 255);
+            color: #1A2E46;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .redirectbtn:hover {
+            background-color: rgb(244, 214, 244);
+        }
+        .footer {
+            background: #e13275;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <header>
-        <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg">Women Empowerment</header>
+        <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg">Women Empowerment
+    </header>
     <nav class="nav-bar">
         <span class="menu-icon" onclick="toggleSidebar()">☰</span>
         <p>Made by Women, Made for Change</p>
-        <a href="https://wcdhry.gov.in/women-helpline-number-181/#:~:text=Helpline%20Number%20181-,Women%20Helpline%20Number%20181,through%20a%20single%20uniform%20number." 
-           target="_blank" class="sos-button">Helpline
-        </a>
+        <a href="https://wcdhry.gov.in/women-helpline-number-181" target="_blank" class="sos-button">Helpline</a>
     </nav>
-    
+
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <a href="#">About</a>
@@ -265,52 +253,46 @@
         <a href="#">Contact</a>
     </div>
 
-<div class="content-wrapper">
-    <div class="slideshow-container">
-        <div class="carousel">
-            <img class="slides" src="https://images.unsplash.com/photo-1547937084-4d587301a545?q=80&w=2070&auto=format&fit=crop" alt="Slide 1">
-            <img class="slides" src="https://images.unsplash.com/photo-1633329712165-4e578376eb87?q=80&w=2070&auto=format&fit=crop" alt="Slide 2">
-            <img class="slides" src="https://images.unsplash.com/photo-1467307983825-619715426c70?q=80&w=1977&auto=format&fit=crop" alt="Slide 3">
-            <img class="slides" src="https://i.pinimg.com/736x/6f/cd/03/6fcd037674b88e4ec150871ff1d746a9.jpg" alt="Slide 4">
-        </div> 
+    <div class="content-wrapper">
+        <div class="slideshow-container">
+            <div class="carousel">
+                <img class="slides" src="https://images.unsplash.com/photo-1547937084-4d587301a545?q=80&w=2070&auto=format&fit=crop" alt="Slide 1">
+                <img class="slides" src="https://images.unsplash.com/photo-1633329712165-4e578376eb87?q=80&w=2070&auto=format&fit=crop" alt="Slide 2">
+                <img class="slides" src="https://images.unsplash.com/photo-1467307983825-619715426c70?q=80&w=1977&auto=format&fit=crop" alt="Slide 3">
+                <img class="slides" src="https://i.pinimg.com/736x/6f/cd/03/6fcd037674b88e4ec150871ff1d746a9.jpg" alt="Slide 4">
+            </div>
+        </div>
+        <div class="quote-container">
+            <div class="quote-box">
+                <p class="quote-text">emPOWER, is a one stop guidance, knowledge, and information portal for our sisters across the world. Made with love and hope by four inspired girl students to make the world an easier place. Even a single life impacted through this would bring us immense sense of joy and pride. Every story shared, every life touched, and every sister empowered is a step closer to the world we envision—a world where no girl is left behind.</p>
+            </div>
+            <div class="quote-box" id="quote2">
+                <p class="quote-text"><b>"There is no greater pillar of stability than a strong, free, and educated woman." <br>– Angelina Jolie</b></p>
+            </div>
+        </div>
     </div>
-    <div class="quote-container">
-        <div class="quote-box">
-            <p class="quote-text" i>emPOWER, is a one stop guidance, knowledge, and information portal for our sisters across the world. 
-                Made with love and hope by four inspired girl students to make the world an easier place.
-                 Even a single life impacted through this would bring us immense sense of joy and pride.
-                 Every story shared, every life touched, and every sister empowered is a step closer to the world we envision—a world where no girl is left behind. </p>
-             </div>
-             <div class="quote-box" id="quote2" >
-        <p class="quote-text"><b>"There is no greater pillar of stability than a strong, free, and educated woman." <br>– Angelina Jolie</b> </p>
-         </div>     
-</div>
-</div>
+
     <div class="content-section">
         <div class="content-box">
             <h2>Myth vs Reality: Breaking Menstrual Misconceptions</h2>
-            <p>Unveil the reality behind menstrual health—test your knowledge and break the cycle of misinformation! How much do you really know? Take the quiz and challenge the myths today!</p>
+            <p>Unveil the reality behind menstrual health—test your knowledge and break the cycle of misinformation! Take the quiz today!</p>
             <button class="redirectbtn" id="quizbtn">Start Quiz</button>
         </div>
         <div class="content-box">
             <h2>Every Girl Deserves a Future</h2>
-            <p>A girl’s life is not a choice—it’s a right! Get the right information and take a stand against female foeticide with the help of our AI chatbot.
-            Gender should never decide a child’s fate. Let’s raise awareness, challenge harmful norms, and protect the rights of every girl!</p>
+            <p>Get the right information and take a stand against female foeticide with the help of our AI chatbot.</p>
             <button class="redirectbtn" id="chatbtn">Chat Now</button>
         </div>
         <div class="content-box">
             <h2>Know Your Worth: Check Your Pay</h2>
-            <p>Are you being paid what you truly deserve? Check your salary against market standards and demand what’s rightfully yours!
-           Don’t settle for less—analyze your earnings, compare with industry trends, and take control of your financial future!</p>
+            <p>Analyze your earnings, compare with industry trends, and take control of your financial future!</p>
             <button class="redirectbtn" id="paybtn">Check Your Pay</button>
         </div>
-    
         <div class="content-box">
             <h2>Unlock Your Future with the Right Guidance</h2>
-            <p>Success starts with the right guidance! Discover scholarships, mentorship programs, and career paths that match your goals.
-            Don’t let confusion hold you back—find the best opportunities, get expert mentorship!</p>
+            <p>Discover scholarships, mentorship programs, and career paths that match your goals.</p>
             <button class="redirectbtn" id="recobtn">Get Started</button>
-        </div>       
+        </div>
     </div>
 
     <footer class="footer">
@@ -334,25 +316,25 @@
             document.querySelector(".carousel").style.transform = `translateX(${-index * 100}%)`;
         }
         setInterval(showSlides, 3000);
-       
 
         document.getElementById("chatbtn").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevents any default behavior
-            window.location.href = "{{ url_for('chat', _external=True) }}" // Redirect to another page
+            event.preventDefault();
+            window.location.href = "{{ url_for('chat', _external=true) }}";
         });
+
         document.getElementById("quizbtn").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevents any default behavior
-            window.location.href = "{{ url_for('welcome', _external=True) }}";
-            // Redirect to another page
+            event.preventDefault();
+            window.location.href = "{{ url_for('welcome', _external=true) }}";
         });
+
         document.getElementById("recobtn").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevents any default behavior
-            window.location.href = "{{ url_for('recom', _external=True) }}"; // Redirect to another page
+            event.preventDefault();
+            window.location.href = "{{ url_for('recom', _external=true) }}";
         });
+
         document.getElementById("paybtn").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevents any default behavior
-            window.location.href = "{{ url_for('paygap', _external=True) }}";
-            // Redirect to another page
+            event.preventDefault();
+            window.location.href = "{{ url_for('paygap', _external=true) }}";
         });
     </script>
 </body>
