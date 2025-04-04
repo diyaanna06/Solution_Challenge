@@ -505,7 +505,7 @@ box-shadow:#f6c23e 10px 10px 10px;
 
         async function fetchSkills() {
             try {
-                let response = await fetch("http://127.0.0.1:5000/get_unique_skills");
+                let response = await fetch("/get_unique_skills");
                 let skills = await response.json();
 
                 let container = document.getElementById("skills-container");
@@ -541,7 +541,7 @@ box-shadow:#f6c23e 10px 10px 10px;
             }
 
             try {
-                let response = await fetch("http://127.0.0.1:5000/get_recommendations", {
+                let response = await fetch("/get_recommendations", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ skills: Array.from(selectedSkills) })
@@ -630,7 +630,7 @@ box-shadow:#f6c23e 10px 10px 10px;
             resultsContainer.innerHTML = '<p>Loading...</p>';
 
             try {
-                const response = await fetch('http://localhost:5000/get-career-advice', {
+                const response = await fetch('/get-career-advice', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ interests })
