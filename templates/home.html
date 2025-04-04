@@ -338,7 +338,7 @@
 
         document.getElementById("chatbtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
-            window.location.href = "http://127.0.0.1:5000/chat"; // Redirect to another page
+            window.location.href = "{{ url_for('chat', _external=True) }}" // Redirect to another page
         });
         document.getElementById("quizbtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
@@ -347,11 +347,11 @@
         });
         document.getElementById("recobtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
-            window.location.href = "http://127.0.0.1:5000/recom"; // Redirect to another page
+            window.location.href = "{{ url_for('recom', _external=True) }}"; // Redirect to another page
         });
         document.getElementById("paybtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
-            window.location.href = "http://127.0.0.1:5000/paygap"; // Redirect to another page
+            window.location.href = "{{ url_for('paygap', _external=True) }}"; // Redirect to another page
         });
     </script>
 </body>
