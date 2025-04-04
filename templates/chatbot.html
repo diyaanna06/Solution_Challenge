@@ -227,7 +227,7 @@
 
       <div class="chat-container">
         <div class="chat-header">
-          <h2>Legal Chatbot</h2>
+          <h2>AI Chatbot</h2>
         </div>
         <div id="chat-box"></div>
         <div class="input-container">
@@ -265,67 +265,74 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const typingElement = document.getElementById("typing-content");
-        const textLines = ["LEGAL CHATBOT", "AGAINST", "FEMALE FETICIDE"];
-        typeText(typingElement, textLines, 100);
-      });
-
-      async function typeText(element, lines, speed) {
-        for (let i = 0; i < lines.length; i++) {
-          if (i > 0) element.innerHTML += "<br>";
-          await simulateTypingEffect(element, lines[i], speed);
+        document.addEventListener("DOMContentLoaded", function () {
+          const typingElement = document.getElementById("typing-content");
+          const textLines = ["LEGAL CHATBOT", "AGAINST", "FEMALE FETICIDE"];
+          typeText(typingElement, textLines, 100);
+        });
+      
+        async function typeText(element, lines, speed) {
+          for (let i = 0; i < lines.length; i++) {
+            if (i > 0) element.innerHTML += "<br>";
+            await simulateTypingEffect(element, lines[i], speed);
+          }
         }
-      }
-
-      async function simulateTypingEffect(element, text, speed) {
-        for (let i = 0; i < text.length; i++) {
-          element.innerHTML += text[i];
-          await new Promise((resolve) => setTimeout(resolve, speed));
+      
+        async function simulateTypingEffect(element, text, speed) {
+          for (let i = 0; i < text.length; i++) {
+            element.innerHTML += text[i];
+            await new Promise((resolve) => setTimeout(resolve, speed));
+          }
         }
-      }
-
-      async function faqQuestion(question) {
-        await askChatbot(question);
-      }
-
-      async function askChatbot(question = null) {
-        const input = document.getElementById("question");
-        const chatBox = document.getElementById("chat-box");
-
-        const userText = question || input.value.trim();
-        if (!userText) return;
-
-        const userMessage = document.createElement("p");
-        userMessage.classList.add("user-message");
-        userMessage.innerText = "You: " + userText;
-        chatBox.appendChild(userMessage);
-
-        const botMessage = document.createElement("p");
-        botMessage.classList.add("bot-message");
-        botMessage.innerText = "Bot: Thinking...";
-        chatBox.appendChild(botMessage);
-
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        if (!question) input.value = "";
-
-        try {
-          const response = await fetch("/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: userText }),
-          });
-
-          const data = await response.json();
-          botMessage.innerText = "Bot: " + (data.response || "No answer found.");
-        } catch (err) {
-          botMessage.innerText = "Bot: Sorry, something went wrong.";
-          console.error(err);
+      
+        async function faqQuestion(question) {
+          await askChatbot(question);
         }
-
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    </script>
+      
+        async function askChatbot(question = null) {
+          const input = document.getElementById("question");
+          const chatBox = document.getElementById("chat-box");
+      
+          const userText = question || input.value.trim();
+          if (!userText) return;
+      
+          const userMessage = document.createElement("p");
+          userMessage.classList.add("user-message");
+          userMessage.innerText = "You: " + userText;
+          chatBox.appendChild(userMessage);
+      
+          const botMessage = document.createElement("p");
+          botMessage.classList.add("bot-message");
+          botMessage.innerText = "Bot: ";
+          chatBox.appendChild(botMessage);
+      
+          chatBox.scrollTop = chatBox.scrollHeight;
+      
+          if (!question) input.value = "";
+      
+          try {
+            const response = await fetch("/chat", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ message: userText }),
+            });
+      
+            const data = await response.json();
+            const botReply = data.response || "No answer found.";
+            
+            // Clear the placeholder and type out the actual response
+            botMessage.innerText = "Bot: ";
+            const span = document.createElement("span");
+            botMessage.appendChild(span);
+            await simulateTypingEffect(span, botReply, 30); // slower typing
+          } catch (err) {
+            botMessage.innerText = "Bot: Sorry, something went wrong.";
+            console.error(err);
+          }
+      
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+      </script>
+      
   </body>
 </html>
