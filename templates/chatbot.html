@@ -9,7 +9,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #e6e6fa;
+            background: linear-gradient(to right, #f8e8ee, #e0c3fc);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,30 +27,28 @@
         }
 
         .text-container {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: bold;
-            color: #5a189a;
+            color: #6d24aa;
             display: flex;
             flex-direction: column;
             position: relative;
             min-width: 350px;
             text-align: center;
-            margin-top: -10px;
         }
 
         .logo-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 0px;
         }
 
         .logo-container img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 4px solid white;
+            border: 5px solid white;
             object-fit: cover;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .typing-text {
@@ -61,8 +59,8 @@
         .cursor {
             display: inline-block;
             width: 8px;
-            height: 40px;
-            background: #5a189a;
+            height: 38px;
+            background: #6d24aa;
             animation: blink 0.7s infinite;
         }
 
@@ -72,11 +70,11 @@
 
         .chat-container {
             width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #90e0ef, #00b4d8);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            height: 520px;
+            background: linear-gradient(135deg, #a685e2, #6d24aa);
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -84,26 +82,26 @@
 
         .chat-header {
             color: white;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
         }
 
         #chat-box {
             width: 100%;
-            height: 350px;
+            height: 380px;
             overflow-y: auto;
             padding: 15px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 12px;
             margin-top: 10px;
             font-size: 18px;
             text-align: left;
         }
 
         .user-message, .bot-message {
-            padding: 12px;
-            border-radius: 10px;
-            margin: 8px 0;
+            padding: 14px;
+            border-radius: 12px;
+            margin: 10px 0;
             font-size: 18px;
             line-height: 1.5;
             word-wrap: break-word;
@@ -113,44 +111,45 @@
 
         .user-message {
             background: rgba(255, 255, 255, 0.9);
-            color: #7400b8;
+            color: #6d24aa;
             text-align: left;
         }
 
         .bot-message {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             color: white;
             text-align: left;
         }
 
         .input-container {
             display: flex;
-            margin-top: 10px;
+            margin-top: 12px;
             border-radius: 10px;
             overflow: hidden;
         }
 
         input {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 10px 0 0 10px;
+            border-radius: 12px 0 0 12px;
             font-size: 18px;
         }
 
         button {
             background: #fff;
             border: none;
-            padding: 14px;
-            font-size: 20px;
+            padding: 16px;
+            font-size: 22px;
             cursor: pointer;
-            color: #7400b8;
-            border-radius: 0 10px 10px 0;
-            transition: background 0.3s;
+            color: #6d24aa;
+            border-radius: 0 12px 12px 0;
+            transition: background 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background: #c77dff;
+            background: #d5b3ff;
+            transform: scale(1.05);
         }
 
         @keyframes fadeIn {
@@ -186,7 +185,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const typingElement = document.getElementById("typing-content");
-            const textLines = ["LEGAL CHATBOT", "FOR", "FEMALE FOETICIDE"];
+            const textLines = ["LEGAL CHATBOT", "AGAINST", "FEMALE FOETICIDE"];
             typeText(typingElement, textLines, 100);
         });
 
@@ -205,48 +204,53 @@
         }
 
         async function askChatbot() {
-            const questionInput = document.getElementById("question");
-            const chatBox = document.getElementById("chat-box");
+    const questionInput = document.getElementById("question");
+    const chatBox = document.getElementById("chat-box");
 
-            if (!questionInput.value.trim()) {
-                alert("Please enter a question.");
-                return;
-            }
+    if (!questionInput.value.trim()) {
+        alert("Please enter a question.");
+        return;
+    }
 
-            const userMessage = document.createElement("p");
-            userMessage.classList.add("user-message");
-            userMessage.innerText = "You: " + questionInput.value;
-            chatBox.appendChild(userMessage);
+    const userMessage = document.createElement("p");
+    userMessage.classList.add("user-message");
+    userMessage.innerText = "You: " + questionInput.value;
+    chatBox.appendChild(userMessage);
 
-            const botMessage = document.createElement("p");
-            botMessage.classList.add("bot-message");
+    const botMessage = document.createElement("p");
+    botMessage.classList.add("bot-message");
+    chatBox.appendChild(botMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-            chatBox.appendChild(botMessage);
-            chatBox.scrollTop = chatBox.scrollHeight;
+    await simulateTypingEffect(botMessage, "Bot: Thinking...");
 
-            await simulateTypingEffect(botMessage, "Bot: Thinking...");
+    try {
+        const res = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: questionInput.value }),
+        });
 
-            try {
-                const res = await fetch("/chat", { 
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: questionInput.value }),
-                });
+        if (!res.ok) throw new Error("Failed to get a response.");
 
-                if (!res.ok) {
-                    throw new Error("Failed to get a response.");
-                }
+        const data = await res.json();
 
-                const data = await res.json();
-                botMessage.innerText = "Bot: ";
-                await simulateTypingEffect(botMessage, data.response || "No response received.");
-            } catch (error) {
-                console.error("Error:", error);
-                botMessage.innerText = "Bot: Error fetching response.";
-            }
+        // Apply structured formatting
+        let formattedResponse = `**Bot Response:**\n\n`;
+        
+        formattedResponse += data.response
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Bold text
+            .replace(/\n/g, "<br>"); // Add line breaks
 
-            questionInput.value = "";
-        }
+        botMessage.innerHTML = formattedResponse;
+    } catch (error) {
+        console.error("Error:", error);
+        botMessage.innerText = "Bot: Error fetching response.";
+    }
+
+    questionInput.value = "";
+}
+
     </script>
 
 </body>
