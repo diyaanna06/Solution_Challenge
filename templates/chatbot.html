@@ -7,22 +7,75 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: url('/background.jpg') no-repeat center center/cover;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e6e6fa;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            width: 85%;
+            justify-content: flex-start;
+            gap: 40px;
+        }
+
+        .text-container {
+            font-size: 40px;
+            font-weight: bold;
+            color: #5a189a;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-width: 350px;
+            text-align: center;
+            margin-top: -10px;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0px;
+        }
+
+        .logo-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .typing-text {
+            display: inline-block;
+            white-space: pre-line;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 40px;
+            background: #5a189a;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
         }
 
         .chat-container {
-            width: 90%;
-            max-width: 400px;
-            background: linear-gradient(135deg, #ff66b2, #cc0088);
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #90e0ef, #00b4d8);
             padding: 20px;
-            border-radius: 20px;
+            border-radius: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
             display: flex;
@@ -30,44 +83,44 @@
         }
 
         .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
             color: white;
-            font-size: 18px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .chat-icon {
-            width: 30px;
-        }
-
-        #chat-box { 
+        #chat-box {
             width: 100%;
-            height: 300px;
+            height: 350px;
             overflow-y: auto;
             padding: 15px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.6);
             border-radius: 10px;
             margin-top: 10px;
-            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
-        }
-
-        .user-message { 
-            background: rgba(255, 255, 255, 0.8);
-            color: #ff0080;
-            padding: 10px;
-            border-radius: 10px;
+            font-size: 18px;
             text-align: left;
-            margin: 5px 0;
         }
 
-        .bot-message { 
-            background: rgba(0, 0, 0, 0.8);
+        .user-message, .bot-message {
+            padding: 12px;
+            border-radius: 10px;
+            margin: 8px 0;
+            font-size: 18px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .user-message {
+            background: rgba(255, 255, 255, 0.9);
+            color: #7400b8;
+            text-align: left;
+        }
+
+        .bot-message {
+            background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 10px;
-            border-radius: 10px;
             text-align: left;
-            margin: 5px 0;
         }
 
         .input-container {
@@ -77,44 +130,80 @@
             overflow: hidden;
         }
 
-        input { 
-            flex: 1; 
-            padding: 12px; 
+        input {
+            flex: 1;
+            padding: 14px;
             border: none;
             border-radius: 10px 0 0 10px;
-            font-size: 14px;
+            font-size: 18px;
         }
 
-        button { 
+        button {
             background: #fff;
             border: none;
-            padding: 12px;
-            font-size: 18px;
+            padding: 14px;
+            font-size: 20px;
             cursor: pointer;
-            color: #ff0080;
+            color: #7400b8;
             border-radius: 0 10px 10px 0;
             transition: background 0.3s;
         }
 
         button:hover {
-            background: #ffccff;
+            background: #c77dff;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <img src="/chat-icon.png" alt="Chat Icon" class="chat-icon">
-            <h2>Legal Chatbot</h2>
+
+    <div class="container">
+        <div class="text-container">
+            <div class="logo-container">
+                <img src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" alt="Logo">
+            </div>
+            <div class="typing-text">
+                <span id="typing-content"></span><span class="cursor"></span>
+            </div>
         </div>
-        <div id="chat-box"></div>
-        <div class="input-container">
-            <input type="text" id="question" placeholder="Type your question...">
-            <button onclick="askChatbot()">➤</button>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Legal Chatbot</h2>
+            </div>
+            <div id="chat-box"></div>
+            <div class="input-container">
+                <input type="text" id="question" placeholder="Type your question...">
+                <button onclick="askChatbot()">➤</button>
+            </div>
         </div>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const typingElement = document.getElementById("typing-content");
+            const textLines = ["LEGAL CHATBOT", "FOR", "FEMALE FOETICIDE"];
+            typeText(typingElement, textLines, 100);
+        });
+
+        async function typeText(element, lines, speed) {
+            for (let i = 0; i < lines.length; i++) {
+                if (i > 0) element.innerHTML += "<br>";
+                await simulateTypingEffect(element, lines[i], speed);
+            }
+        }
+
+        async function simulateTypingEffect(element, text, speed) {
+            for (let i = 0; i < text.length; i++) {
+                element.innerHTML += text[i];
+                await new Promise(resolve => setTimeout(resolve, speed));
+            }
+        }
+
         async function askChatbot() {
             const questionInput = document.getElementById("question");
             const chatBox = document.getElementById("chat-box");
@@ -129,6 +218,14 @@
             userMessage.innerText = "You: " + questionInput.value;
             chatBox.appendChild(userMessage);
 
+            const botMessage = document.createElement("p");
+            botMessage.classList.add("bot-message");
+
+            chatBox.appendChild(botMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            await simulateTypingEffect(botMessage, "Bot: Thinking...");
+
             try {
                 const res = await fetch("/chat", { 
                     method: "POST",
@@ -141,17 +238,16 @@
                 }
 
                 const data = await res.json();
-                const botMessage = document.createElement("p");
-                botMessage.classList.add("bot-message");
-                botMessage.innerText = "Bot: " + (data.response || "No response received.");
-                chatBox.appendChild(botMessage);
+                botMessage.innerText = "Bot: ";
+                await simulateTypingEffect(botMessage, data.response || "No response received.");
             } catch (error) {
                 console.error("Error:", error);
-                alert("An error occurred while fetching response.");
+                botMessage.innerText = "Bot: Error fetching response.";
             }
 
             questionInput.value = "";
         }
     </script>
+
 </body>
 </html>
