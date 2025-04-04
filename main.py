@@ -27,7 +27,7 @@ model2 = genai.GenerativeModel("gemini-2.0-flash")
 
 @app.route('/recom')
 def recom():
-    return render_template('recom.html')
+    return render_template('education.html')
 
 @app.route("/get-career-advice", methods=["POST"])
 def career_advice():
@@ -138,15 +138,14 @@ num_questions=0
 df = pd.read_csv("questions.csv")
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 @app.route("/chat")
 def serve_frontend():
-    return render_template("merin.html")
+    return render_template("chatbot.html")
 
 @app.route('/welcome')
 def welcome():
-    return render_template('welcome.html')
-
+    return render_template('quiz1.html')
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json
@@ -170,7 +169,7 @@ def chat():
 def main():
     global num_questions
     num_questions = request.args.get('num', type=int)
-    return render_template('main.html', num_questions=num_questions)
+    return render_template('quiz2.html', num_questions=num_questions)
 
 @app.route('/get-questions', methods=["GET"])
 def get_questions():
@@ -214,7 +213,7 @@ def submit_quiz():
 def result():
     final_score = request.args.get("score", type=int)
     total_questions = request.args.get("total", type=int)
-    return render_template("result.html", score=final_score, total=total_questions)
+    return render_template("quiz3.html", score=final_score, total=total_questions)
 
 # ========================== PAY PARITY ==========================
 # Load CSV files
@@ -273,11 +272,6 @@ def get_salary():
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": "Internal Server Error"}), 500
-# ========================== RUN FLASK APP ==========================
 
-""" quiz flask running
-if __name__ == "__main__":
-    app.run(debug=True)
-      """
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
