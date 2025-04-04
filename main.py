@@ -222,7 +222,7 @@ df2 = pd.read_csv("salary2.csv")
 salary_data = pd.concat([df1, df2])  # Combine both CSVs
 
 @app.route('/paygap')
-def home2():
+def paygap():
     return render_template("paygap.html")
 
 @app.route("/get_salary", methods=['POST'])

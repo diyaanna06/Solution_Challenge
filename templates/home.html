@@ -351,7 +351,8 @@
         });
         document.getElementById("paybtn").addEventListener("click", function(event) {
             event.preventDefault(); // Prevents any default behavior
-            window.location.href = "{{ url_for('paygap', _external=True) }}"; // Redirect to another page
+            window.location.href = "{{ url_for('paygap', _external=True) }}";
+            // Redirect to another page
         });
     </script>
 </body>
