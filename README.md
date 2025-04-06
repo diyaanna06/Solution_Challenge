@@ -42,6 +42,7 @@ Education and mentorship open doors to brighter futures. Our system involves a r
 2. Install the requirements:
 
  `pip install -r requirements.txt`
+ 
 3.  Environment Variables:
 
    Set up your Google API Key and any other environment variables as needed.
