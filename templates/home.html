@@ -351,9 +351,10 @@
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     <div class="sidebar" id="sidebar">
-        <a href="#">About</a>
+        <a>Home</a>
+        <a href="{{ url_for('about') }}">About Us</a>
         <a href="{{ url_for('services') }}">Services</a>
-        <a href="#">Contact</a>
+        <a href="{{ url_for('statistics') }}">Statistics</a>
     </div>
 
     <div class="content-wrapper">
