@@ -8,6 +8,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            position: absolute;
+            left: 25px;
+            top: 50px;
+            transform: translateY(-50%)
+        }
         :root {
             --primary: #4e73df;
             --secondary: #1cc88a;
@@ -430,6 +441,7 @@ box-shadow:#f6c23e 10px 10px 10px;
     </style>
 </head>
 <body>
+    <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" onclick="GotoHome()">
     <div class="header animate__animated animate__fadeInDown">
         <h1>Education Hub</h1>
     </div>
@@ -485,6 +497,9 @@ box-shadow:#f6c23e 10px 10px 10px;
     </div>
 
     <script>
+            function GotoHome(){
+        window.location.href=`/`;
+    }
         // Tab functionality
         function openTab(tabName) {
             const tabContents = document.getElementsByClassName("tab-content");
@@ -681,6 +696,7 @@ box-shadow:#f6c23e 10px 10px 10px;
                 button.classList.add('animate__animated', 'animate__fadeIn');
             });
         };
+    
     </script>
 </body>
 </html>

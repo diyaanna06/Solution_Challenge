@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayParity</title>
     <style>
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            position: absolute;
+            left: 25px;
+            top: 15px;
+            transform: translateY(-50%)
+        }
         body {    
             background-image: url('/static/background6040.webp');
             background-size: cover;
@@ -130,7 +141,8 @@
 <body>
 
 <!-- Header -->
-<div class="header">PayParity</div>
+<img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" onclick="GotoHome()">
+<div class="header">    &nbsp;&nbsp; &nbsp; &nbsp;PayParity</div>
 
 <!-- Main Content -->
 <div class="main-content">
@@ -256,6 +268,9 @@
         resultDiv.innerHTML = `<p style="color:red;">❌ Error fetching salary data. Try again later.</p>`;
     }
 });
+function GotoHome(){
+        window.location.href=`/`;
+    }
 
 </script>
 
