@@ -7,17 +7,19 @@ This project is a heartfelt initiative by four girls who believe in change. Wome
 
 ## Main Features
 
-1.  AI Chatbot for Female Feticide Awareness
-Our AI-powered chatbot is designed to provide information, debunk myths, and raise awareness about the grave issue of female feticide. Through meaningful conversations, we aim to inspire change and educate individuals on the importance of gender equality.
+1.  ### AI Chatbot for Female Feticide Awareness
+Our GEMINI-powered Female Feticide legal advisor chatbot educates users about legalities of  horrific practice and encourage them to take action. It is designed specially to provide information, debunk myths, and raise awareness about the grave issue of female feticide. Through meaningful conversations, we aim to inspire change and educate individuals on the importance of gender equality.
 
-2.  Myth-Busting Menstrual Health Quiz
-Menstruation is natural, yet countless myths and taboos surround it. Our quiz is designed to help users distinguish facts from misconceptions, empowering them with knowledge.
+2. ### Myth-Busting Menstrual Health Quiz
+Menstruation is natural, yet countless myths and taboos surround it. Our interactive quiz with handpicked set of questions help users distinguish facts from misconceptions, empowering them with knowledge. Users can select the number of questions and get a score based on their play.
 
-3.  Fair Pay Checker for Women
-Many women are underpaid for the same job as their male counterparts. Our tool helps female users determine if they are being paid fairly compared to market standards, promoting wage transparency.
 
-4.  Mentorship, Scholarships & Career Guidance
-Education and mentorship open doors to brighter futures. Our system recommends scholarships, career paths, and mentorship opportunities tailored to users' skills and interests, helping them break barriers in their professional journey.
+3. ### PayParity
+Many women are underpaid for the same job as their male counterparts. Our tool helps female users determine if they are being paid fairly compared to market standards, promoting wage transparency. This data-driven model analyzes pay parity for women in tech across major IT hubs and various job roles, highlighting disparities and driving awareness.
+
+
+4. ### Mentorship, Scholarships & Career Guidance
+Education and mentorship open doors to brighter futures. Our system involves a recommendaation model that suggests suitable Mentorship, Scholarship programs tailored to the skills users input. This is powered by a curated dataset with innumerable multi-skilled programs. It also includes a GEMINI-powered career guidance model, helping them break barriers in their professional journey.
 
 ## Tech Stack
 
