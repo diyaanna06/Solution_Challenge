@@ -280,5 +280,9 @@ def services():
 def about():
     return render_template("about.html")
 
+@app.route("/statistics")
+def statistics():
+    return render_template("statistics.html")
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
