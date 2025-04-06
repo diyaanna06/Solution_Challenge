@@ -272,5 +272,9 @@ def get_salary():
         print("Error:", str(e))
         return jsonify({"error": "Internal Server Error"}), 500
 
+@app.route("/services")
+def services():
+    return render_template("services.html")
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
