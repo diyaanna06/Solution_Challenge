@@ -228,14 +228,115 @@
             background-color: rgb(244, 214, 244);
         }
         .footer {
-            background: #e13275;
+            background:#d02565;
             color: white;
+            padding: 1.5rem 0 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.7rem;
+            position: relative;
+            padding-bottom: 0.3rem;
+        }
+
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #fff;
+        }
+
+        .footer p {
+            margin: 0.3rem 0;
+            font-weight: normal;
+            line-height: 1.4;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 0.3rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin: 0.3rem 0;
+        }
+
+        .copyright {
             text-align: center;
-            padding: 1.5rem;
-            font-size: 1rem;
-            font-weight: bold;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
             width: 100%;
         }
+        
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .team-member p {
+            margin: 0;
+        }
+        
+        .linkedin-icon {
+            margin-left: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .linkedin-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 2rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -298,8 +399,65 @@
     </div>
 
     <footer class="footer">
-        &copy; 2025 Women's Empowerment. All rights reserved.
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@womenempowerment.com</p>
+                <p>Phone: 9063641894</p>
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa08J0La128nXiktjZWxt76mVBntaNdTNk4A&s" alt="Facebook">
+                    </a>
+                    <a href="https://www.X.com" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYIf4qwAVMeAZHL7QYa9s4aOEEiPVYha2HTQ&s" alt="Twitter">
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHpLyuzb24xX9ltEULs43FxfiVtyllotdN7A&s" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Our Team</h3>
+                <div class="team-member">
+                    <p>Merin Theres Jose</p>
+                    <a href="https://www.linkedin.com/in/merin-theres-jose" target="_blank" class="linkedin-icon">
+                        <img src="https://static-00.iconduck.com/assets.00/linkedin-icon-2048x2048-3mmtnow6.png" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <p>Arushi Waddepalli</p>
+                    <a href="https://www.linkedin.com/in/arushi-waddepalli-6972942a1/" target="_blank" class="linkedin-icon">
+                        <img src="https://static-00.iconduck.com/assets.00/linkedin-icon-2048x2048-3mmtnow6.png" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <p>Diya Anna Varghese</p>
+                    <a href="https://www.linkedin.com/in/diyaannavarghese/" target="_blank" class="linkedin-icon">
+                        <img src="https://static-00.iconduck.com/assets.00/linkedin-icon-2048x2048-3mmtnow6.png" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
+                    </a>
+                </div>
+                <div class="team-member">
+                    <p>Sanjana Chennupati</p>
+                    <a href="https://www.linkedin.com/in/sanjana-chennupati-857b50318/" target="_blank" class="linkedin-icon">
+                        <img src="https://static-00.iconduck.com/assets.00/linkedin-icon-2048x2048-3mmtnow6.png" alt="LinkedIn" style="width: 20px; height: 20px; vertical-align: middle;">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>About emPOWER</h3>
+                <p>emPOWER is dedicated to providing guidance, knowledge, and information to women across the world.</p>
+                <p>Our mission is to create a world where every woman has the resources and support she needs to thrive.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 emPOWER. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
     </footer>
+
 
     <script>
         function toggleSidebar() {
