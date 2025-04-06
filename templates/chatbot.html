@@ -217,7 +217,7 @@
         <div class="logo-container">
           <img
             src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg"
-            alt="Logo"
+            alt="Logo" onclick="GotoHome()"
           />
         </div>
         <div class="typing-text">
@@ -332,6 +332,9 @@
       
           chatBox.scrollTop = chatBox.scrollHeight;
         }
+        function GotoHome(){
+        window.location.href=`/`;
+    }
       </script>
       
   </body>

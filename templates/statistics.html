@@ -78,7 +78,7 @@
 </head>
 <body>
     <header>
-        <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" alt="Women's Empowerment Logo">
+        <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg"onclick="GotoHome()" alt="Women's Empowerment Logo">
         Women's Empowerment
     </header>
 
@@ -120,6 +120,9 @@
     </footer>
 
     <script>
+        function GotoHome(){
+        window.location.href=`/`;
+    }
         const educationChart = new Chart(document.getElementById('educationChart'), {
             type: 'line',
             data: {

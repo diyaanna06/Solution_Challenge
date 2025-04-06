@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Page</title>
     <style>
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            position: absolute;
+            left: 25px;
+            top: 50px;
+            transform: translateY(-50%);
+        }
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -75,6 +86,7 @@
     </style>
 </head>
 <body>
+    <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" onclick="GotoHome()">
     <div class="container">
         <h1>Welcome to the MythBuster Quiz!</h1>
         <p>Let's challenge myths and taboos related to menstruation. Adjust the slider to choose the number of questions and click 'Start Quiz' to begin!</p>
@@ -90,6 +102,9 @@
         function startQuiz() {
         let numQuestions = document.getElementById("numQuestions").value;
         window.location.href = `/main?num=${numQuestions}`;
+    }
+    function GotoHome(){
+        window.location.href=`/`;
     }
     </script>
 </body>

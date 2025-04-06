@@ -8,6 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+           .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            position: absolute;
+            left: 25px;
+            top: 50px;
+            transform: translateY(-50%);
+        }
         body {
             font-family: 'Poppins', sans-serif;
             background-image: url('https://media.istockphoto.com/id/1162599971/vector/seamless-vector-pattern-with-pink-female-gender-icon.jpg?s=612x612&w=0&k=20&c=ODsEUtmm43T-4CyXgbjkkPgWPPGZVAsQwU6ESiUMSHQ=');
@@ -60,7 +71,7 @@
     </style>
 </head>
 <body>
-   
+    <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" onclick="GotoHome()">
 <div class="quiz-container">
     <h1><b>Break the Stigma: Menstrual Myth Challenge!</b></h1>
     <form id="quiz-form">
@@ -69,6 +80,9 @@
     </form>
 </div>
 <script>
+    function GotoHome(){
+        window.location.href=`/`;
+    }
     document.addEventListener("DOMContentLoaded", async function () {
     const params = new URLSearchParams(window.location.search);
     const numQuestions = params.get("num");

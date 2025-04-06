@@ -7,6 +7,17 @@
     <title>Quiz Results</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+           .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            position: absolute;
+            left: 25px;
+            top: 50px;
+            transform: translateY(-50%);
+        }
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -62,6 +73,7 @@
     </style>
 </head>
 <body>
+    <img class="logo" src="https://i.pinimg.com/474x/ff/27/19/ff271930532685d225d573f63ba0a92f.jpg" onclick="GotoHome()">
     <h1>Challenge Results</h1>
     <div class="result-box">
         <p class="score" style="text-align: center;">Your Score : <span id="score"></span> / <span id="total"></span></p>
@@ -71,6 +83,9 @@
         
     </div>
     <script>
+        function GotoHome(){
+        window.location.href=`/`;
+    }
      document.addEventListener("DOMContentLoaded", function () {
     const quizResults = localStorage.getItem("quizResults");
 
