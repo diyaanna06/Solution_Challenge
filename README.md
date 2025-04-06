@@ -1,4 +1,4 @@
-# Solution_Challenge
+# Google Solution Challenge
 Bridging the Gender Gap – Empowering the Girl Child
 
 Educating and empowering women isn't just about equality, it's about progress. Together, let's bridge the gap and build a world where every girl has the opportunity to thrive.
