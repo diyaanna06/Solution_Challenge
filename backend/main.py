@@ -18,7 +18,7 @@ model = joblib.load('models/PayParity.pkl')
 all_columns = joblib.load('models/all_columns.pkl')
 
 # Initialize Flask app
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # ========================== GEMINI API FOR CAREER GUIDANCE ==========================
@@ -311,5 +311,5 @@ def statistics():
     return render_template("statistics.html")
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     app.run(debug=True, port=5000)
