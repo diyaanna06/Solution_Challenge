@@ -180,17 +180,21 @@ def main():
 
 @app.route('/get-questions', methods=["GET"])
 def get_questions():
-    global answers_list
-    global num_questions
-    global questions
-    questions = []
-    n = num_questions
-    selected_questions = df.sample(n=n).to_dict(orient='records')
-    for i in range(n):
-        questions.append(selected_questions[i]['Question'])
-    answers = {str(q["ID"]): q["Correct Answer"] for q in selected_questions}
-    answers_list = list(answers.values())
-    return jsonify(selected_questions)
+    try:
+        global answers_list
+        global questions
+        num_questions = request.args.get('num', type=int)  # Get num_questions from query params
+        if not num_questions or num_questions <= 0:
+            return jsonify({"error": "Invalid number of questions"}), 400
+
+        selected_questions = df.sample(n=num_questions).to_dict(orient='records')
+        questions = [q['Question'] for q in selected_questions]
+        answers_list = [q["Correct Answer"] for q in selected_questions]
+
+        return jsonify(selected_questions)
+    except Exception as e:
+        print(traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/submit-quiz", methods=["POST"])
@@ -199,19 +203,26 @@ def submit_quiz():
         global answers_list
         global questions
         data = request.json
-        user_answers = data.get("answers", {})
-        user_answers_values = list(user_answers.values())
+        user_answers = data.get("answers", {})  # User's answers as a dictionary
+
+        if not user_answers:
+            return jsonify({"error": "No answers provided"}), 400
+
         total = len(answers_list)
         score = 0
+
+        # Compare each user's answer with the correct answer
         for i in range(total):
-            if user_answers_values[i] == answers_list[i]:
+            question_key = f"q{i}"  # Question key format (e.g., "q0", "q1", etc.)
+            if question_key in user_answers and user_answers[question_key] == answers_list[i]:
                 score += 1
+
         return jsonify({
             "score": score,
             "total": total,
             "questions": questions,
             "correct_answers": answers_list,
-            "user_answers": [user_answers[f"q{i}"] for i in range(total)],
+            "user_answers": [user_answers.get(f"q{i}", "") for i in range(total)],
         })
     except Exception as e:
         print(traceback.format_exc())

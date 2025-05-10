@@ -45,7 +45,7 @@ export default function QuizPage() {
     setError("")
 
     try {
-      const data = await getQuizQuestions()
+      const data = await getQuizQuestions(numQuestions)
       setQuestions(data)
       setStep("quiz")
     } catch (err) {

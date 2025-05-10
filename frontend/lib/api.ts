@@ -47,7 +47,7 @@ export async function getMentorshipRecommendations(skills: string[]) {
 
 // Quiz APIs
 export async function getQuizQuestions(numQuestions: number) {
-  const response = await fetch(`${API_BASE_URL}/get-questions`)
+  const response = await fetch(`${API_BASE_URL}/get-questions?num=${numQuestions}`)
 
   if (!response.ok) {
     throw new Error("Failed to fetch quiz questions")
@@ -55,6 +55,25 @@ export async function getQuizQuestions(numQuestions: number) {
 
   return response.json()
 }
+
+
+export async function getQuizResult(answers: Record<string, string>) {
+  const response = await fetch(`${API_BASE_URL}/get-quiz-result`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ answers }),
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch quiz result")
+  }
+
+  return response.json()
+}
+
+
 
 export async function submitQuiz(answers: Record<string, string>) {
   const response = await fetch(`${API_BASE_URL}/submit-quiz`, {
