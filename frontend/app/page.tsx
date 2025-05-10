@@ -18,8 +18,8 @@ export default function Home() {
       link: "/mentorship",
     },
     {
-      title: "Legal Quiz",
-      description: "Test your knowledge about women's legal rights and protections",
+      title: "Menstrual Myth Buster Quiz",
+      description: "Take this quiz to bust the myths and taboos related to menstruation",
       icon: <BookOpen className="h-8 w-8 text-pink-500" />,
       link: "/quiz",
     },

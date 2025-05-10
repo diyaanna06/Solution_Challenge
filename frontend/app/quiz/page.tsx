@@ -27,12 +27,26 @@ interface Question {
   "Correct Answer": string
 }
 
-
 const getAnswerText = (question: Question, optionLetter: string): string => {
   const value = question[`Option ${optionLetter}` as keyof Question];
   return typeof value === "string" ? value : String(value ?? optionLetter);
 }
 
+function calculateScore(quizResult: any) {
+  let score = 0;
+
+  quizResult.user_answers.forEach((answer: string, index: number) => {
+    const question = quizResult.original_questions[index];
+    if (
+      getAnswerText(question, answer) ===
+      getAnswerText(question, quizResult.correct_answers[index])
+    ) {
+      score++;
+    }
+  });
+
+  return score;
+}
 
 export default function QuizPage() {
   const router = useRouter()
@@ -48,6 +62,7 @@ export default function QuizPage() {
     questions: string[]
     correct_answers: string[]
     user_answers: string[]
+    original_questions?: Question[]
   } | null>(null)
 
   const handleStartQuiz = () => setStep("setup")
@@ -86,7 +101,10 @@ export default function QuizPage() {
 
     try {
       const result = await submitQuiz(answers)
-      setQuizResult(result)
+      setQuizResult({
+        ...result,
+        original_questions: questions
+      })
       setStep("result")
     } catch (err) {
       setError("Failed to submit quiz. Please try again.")
@@ -182,8 +200,7 @@ export default function QuizPage() {
                   {["A", "B", "C", "D"].map((letter) => (
                     <div className="flex items-center space-x-2" key={letter}>
                       <RadioGroupItem value={letter} id={`q${index}-${letter}`} />
-                     <Label htmlFor={`q${index}-${letter}`}>{getAnswerText(question, letter)}</Label>
-
+                      <Label htmlFor={`q${index}-${letter}`}>{getAnswerText(question, letter)}</Label>
                     </div>
                   ))}
                 </div>
@@ -215,6 +232,8 @@ export default function QuizPage() {
   const renderResult = () => {
     if (!quizResult) return null
 
+    const score = calculateScore(quizResult)
+
     return (
       <Card className="max-w-3xl mx-auto">
         <CardHeader>
@@ -223,12 +242,12 @@ export default function QuizPage() {
         <CardContent>
           <div className="text-center mb-8">
             <div className="text-5xl font-bold mb-2">
-              {quizResult.score} / {quizResult.total}
+              {score} / {quizResult.total}
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              {quizResult.score === quizResult.total
+              {score === quizResult.total
                 ? "Excellent! You've got all the answers right!"
-                : quizResult.score >= quizResult.total * 0.7
+                : score >= quizResult.total * 0.7
                   ? "Well done! You're well-informed about menstruation."
                   : "Keep learning and help break the myths around menstruation."}
             </p>
@@ -237,7 +256,7 @@ export default function QuizPage() {
           <div className="space-y-6">
             <h3 className="text-xl font-semibold">Question Review</h3>
             {quizResult.questions.map((questionText, index) => {
-              const originalQuestion = questions.find((q) => q.Question === questionText)
+              const originalQuestion = quizResult.original_questions?.find((q) => q.Question === questionText)
               return (
                 <div key={index} className="border rounded-lg p-4">
                   <p className="font-medium mb-2">
@@ -246,13 +265,7 @@ export default function QuizPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Your Answer</p>
-                      <p
-                        className={`font-medium ${
-                          quizResult.user_answers[index] === quizResult.correct_answers[index]
-                            ? "text-green-600 dark:text-green-400"
-                            : "text-red-600 dark:text-red-400"
-                        }`}
-                      >
+                      <p>
                         {originalQuestion
                           ? getAnswerText(originalQuestion, quizResult.user_answers[index])
                           : quizResult.user_answers[index]}
@@ -260,7 +273,7 @@ export default function QuizPage() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Correct Answer</p>
-                      <p className="font-medium text-green-600 dark:text-green-400">
+                      <p>
                         {originalQuestion
                           ? getAnswerText(originalQuestion, quizResult.correct_answers[index])
                           : quizResult.correct_answers[index]}
