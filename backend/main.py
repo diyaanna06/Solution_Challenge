@@ -5,6 +5,7 @@ import random
 import traceback
 import os
 import json
+import joblib
 import google.generativeai as genai
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -12,6 +13,9 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+model = joblib.load('models/PayParity.pkl')
+all_columns = joblib.load('models/all_columns.pkl')
 
 # Initialize Flask app
 app = Flask(__name__)
