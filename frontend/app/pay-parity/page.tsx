@@ -18,7 +18,7 @@ interface SalaryResult {
 export default function PayParityPage() {
   const [formData, setFormData] = useState({
     job: "",
-    location: "",
+    education_level: 0,
     experience: 0,
     user_salary: 0,
   })
@@ -26,18 +26,18 @@ export default function PayParityPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "experience" || name === "user_salary" ? Number(value) : value,
+      [name]: name === "experience" || name === "user_salary" || name === "education_level" ? Number(value) : value,
     }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.job || !formData.location) {
+    if (!formData.job || formData.education_level === 0) {
       setError("Please fill in all required fields.")
       return
     }
@@ -76,28 +76,42 @@ export default function PayParityPage() {
                   <Label htmlFor="job">
                     Job Title <span className="text-red-500">*</span>
                   </Label>
-                  <Input
+                  <select
                     id="job"
                     name="job"
-                    placeholder="e.g., Software Engineer"
                     value={formData.job}
                     onChange={handleChange}
                     required
-                  />
+                    className="w-full p-2 border rounded-md dark:bg-gray-900 dark:text-white"
+                  >
+                    <option value="">---Select---</option>
+                    <option value="Software Engineer">Software Engineer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="Product Manager">Product Manager</option>
+                    <option value="Business Analyst">Business Analyst</option>
+                    <option value="Marketing Specialist">Marketing Specialist</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="location">
-                    Location <span className="text-red-500">*</span>
+                  <Label htmlFor="education_level">
+                    Level of Education <span className="text-red-500">*</span>
                   </Label>
-                  <Input
-                    id="location"
-                    name="location"
-                    placeholder="e.g., Bangalore"
-                    value={formData.location}
+                  <select
+                    id="education_level"
+                    name="education_level"
+                    value={formData.education_level}
                     onChange={handleChange}
                     required
-                  />
+                    className="w-full p-2 border rounded-md dark:bg-gray-900 dark:text-white"
+                  >
+                    <option value={0}>---Select---</option>
+                    <option value={1}>High School</option>
+                    <option value={2}>Associate's</option>
+                    <option value={3}>Bachelor's</option>
+                    <option value={4}>Master's</option>
+                    <option value={5}>PhD</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
@@ -114,7 +128,7 @@ export default function PayParityPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="user_salary">Your Current Salary (₹)</Label>
+                  <Label htmlFor="user_salary">Your Current Salary ($)</Label>
                   <Input
                     id="user_salary"
                     name="user_salary"
@@ -128,7 +142,7 @@ export default function PayParityPage() {
 
                 <Button
                   type="submit"
-                  disabled={loading || !formData.job || !formData.location}
+                  disabled={loading || !formData.job || formData.education_level === 0}
                   className="w-full bg-pink-500 hover:bg-pink-600"
                 >
                   {loading ? (
@@ -159,15 +173,15 @@ export default function PayParityPage() {
                 <CardContent className="space-y-6">
                   <div>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                      Average Salary for {formData.job} in {formData.location}
+                      Average Salary by market standards:
                     </p>
-                    <p className="text-3xl font-bold">₹{result.salary.toLocaleString()}</p>
+                    <p className="text-3xl font-bold">${result.salary.toLocaleString()}</p>
                   </div>
 
                   {formData.user_salary > 0 && (
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Your Salary</p>
-                      <p className="text-3xl font-bold">₹{formData.user_salary.toLocaleString()}</p>
+                      <p className="text-3xl font-bold">${formData.user_salary.toLocaleString()}</p>
                     </div>
                   )}
 
@@ -179,7 +193,7 @@ export default function PayParityPage() {
                 </CardContent>
                 <CardFooter>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Data based on industry averages for your location and job title.
+                    Data based on industry averages for your job title, education level and experience.
                   </p>
                 </CardFooter>
               </Card>
@@ -202,3 +216,4 @@ export default function PayParityPage() {
     </div>
   )
 }
+
