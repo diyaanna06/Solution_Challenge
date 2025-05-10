@@ -238,44 +238,41 @@ def result():
 
 # ========================== PAY PARITY ==========================
 
-df1 = pd.read_csv("data/salary1.csv")
-df2 = pd.read_csv("data/salary2.csv")
-salary_data = pd.concat([df1, df2])
-
-
-@app.route('/paygap')
-def paygap():
-    return render_template("paygap.html")
-
-
 @app.route("/get_salary", methods=['POST'])
 def get_salary():
     try:
         data = request.json
-        print("Received data:", data)
-
         if not data:
             return jsonify({"error": "No data received"}), 400
 
-        job = str(data.get("job", "")).strip().lower()
-        location = str(data.get("location", "")).strip().lower()
-        experience = int(data.get("experience", 0))
+        job = str(data.get("job", "")).strip()
+        education_level = int(data.get("education_level", 0))
+        experience = float(data.get("experience", 0))
         user_salary = float(data.get("user_salary", 0))
 
-        filtered_data = salary_data[
-            (salary_data["job"].str.lower() == job) &
-            (salary_data["location"].str.lower() == location)
-        ]
+        input_dict = {
+            'Education Level': [education_level],
+            'YearsExperience': [experience],
+            'Salary': [user_salary]
+        }
 
-        if filtered_data.empty:
-            return jsonify({"salary": "No data available"}), 404
+        for col in all_columns:
+            if col.startswith('Job Role_'):
+                input_dict[col] = [1 if col == f'Job Role_{job}' else 0]
 
-        avg_salary = filtered_data["salary"].mean()
+        input_df = pd.DataFrame(input_dict)
+
+        for col in all_columns:
+            if col not in input_df.columns:
+                input_df[col] = 0
+
+        input_df = input_df[all_columns]
+
+        predicted_salary = model.predict(input_df)[0]
 
         if user_salary > 0:
-            percentage_difference = ((user_salary - avg_salary) / avg_salary) * 100
+            percentage_difference = ((user_salary - predicted_salary) / predicted_salary) * 100
             percentage_difference = round(percentage_difference, 2)
-
             if percentage_difference > 0:
                 comparison_message = f"Your salary is {percentage_difference}% above the estimated salary! 🎉"
             else:
@@ -284,7 +281,7 @@ def get_salary():
             comparison_message = "No valid user salary provided."
 
         return jsonify({
-            "salary": round(avg_salary, 2),
+            "salary": round(predicted_salary, 2),
             "comparison": comparison_message
         })
 
