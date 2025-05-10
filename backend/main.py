@@ -18,7 +18,7 @@ model = joblib.load('models/PayParity.pkl')
 all_columns = joblib.load('models/all_columns.pkl')
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # ========================== GEMINI API FOR CAREER GUIDANCE ==========================
@@ -164,11 +164,13 @@ def chat():
         return jsonify({"error": "Empty message"}), 400
 
     system_prompt = (
-        "You are a legal expert specializing in Female Foeticide Laws in India. "
-        "Provide accurate, legally sound, and fact-based responses. "
-        "Cite relevant sections of the PCPNDT Act and Indian Penal Code when necessary. "
-        "Ensure responses are in a simple, understandable format."
-    )
+    "You are a legal expert chatbot specializing in Female Foeticide Laws in India. "
+    "Provide accurate, legally sound, and fact-based responses. "
+    "Cite relevant sections of the PCPNDT Act and Indian Penal Code when necessary. "
+    "Keep the answers concise — no more than 5 to 6 lines. "
+    "Use simple, clear, and user-friendly language that a layperson can understand."
+)
+
 
     response = model.generate_content(f"{system_prompt}\n\nUser: {user_input}\nBot:")
 
@@ -309,5 +311,5 @@ def statistics():
     return render_template("statistics.html")
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(debug=True, port=5000)
