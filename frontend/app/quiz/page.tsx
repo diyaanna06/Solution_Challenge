@@ -4,7 +4,14 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { getQuizQuestions, submitQuiz } from "@/lib/api"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -19,6 +26,13 @@ interface Question {
   "Option D": string
   "Correct Answer": string
 }
+
+
+const getAnswerText = (question: Question, optionLetter: string): string => {
+  const value = question[`Option ${optionLetter}` as keyof Question];
+  return typeof value === "string" ? value : String(value ?? optionLetter);
+}
+
 
 export default function QuizPage() {
   const router = useRouter()
@@ -36,9 +50,7 @@ export default function QuizPage() {
     user_answers: string[]
   } | null>(null)
 
-  const handleStartQuiz = () => {
-    setStep("setup")
-  }
+  const handleStartQuiz = () => setStep("setup")
 
   const handleSetupQuiz = async () => {
     setLoading(true)
@@ -59,7 +71,7 @@ export default function QuizPage() {
   const handleAnswerChange = (questionIndex: number, answer: string) => {
     setAnswers((prev) => ({
       ...prev,
-      [`q${questionIndex}`]: answer,
+      [`q${questionIndex}`]: answer
     }))
   }
 
@@ -87,18 +99,17 @@ export default function QuizPage() {
   const renderWelcome = () => (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-center">Legal Knowledge Quiz</CardTitle>
+        <CardTitle className="text-center">Menstrual Health Awareness Quiz</CardTitle>
         <CardDescription className="text-center">
-          Test your knowledge about women's legal rights and protections in India
+          Challenge common myths and misconceptions about menstruation
         </CardDescription>
       </CardHeader>
       <CardContent className="text-center">
         <p className="mb-6">
-          This quiz will test your understanding of laws related to women's rights, with a focus on female foeticide
-          laws in India.
+          This quiz is designed to bust taboos and raise awareness around menstruation and menstrual health.
         </p>
         <p className="mb-6">
-          You'll be presented with multiple-choice questions. Select the best answer for each question.
+          You'll be presented with multiple-choice questions. Select the most accurate answer for each question.
         </p>
       </CardContent>
       <CardFooter className="flex justify-center">
@@ -113,7 +124,7 @@ export default function QuizPage() {
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-center">Quiz Setup</CardTitle>
-        <CardDescription className="text-center">Choose the number of questions for your quiz</CardDescription>
+        <CardDescription className="text-center">Choose how many questions you want to answer</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -123,7 +134,7 @@ export default function QuizPage() {
               id="num-questions"
               type="number"
               min="1"
-              max="10"
+              max="40"
               value={numQuestions}
               onChange={(e) => setNumQuestions(Number.parseInt(e.target.value) || 5)}
               className="mt-1"
@@ -148,7 +159,7 @@ export default function QuizPage() {
 
   const renderQuiz = () => (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">Legal Knowledge Quiz</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Menstrual Health Awareness Quiz</h1>
 
       {error && (
         <div className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 p-4 rounded-md mb-6">{error}</div>
@@ -168,22 +179,13 @@ export default function QuizPage() {
                 onValueChange={(value) => handleAnswerChange(index, value)}
               >
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="A" id={`q${index}-A`} />
-                    <Label htmlFor={`q${index}-A`}>{question["Option A"]}</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="B" id={`q${index}-B`} />
-                    <Label htmlFor={`q${index}-B`}>{question["Option B"]}</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="C" id={`q${index}-C`} />
-                    <Label htmlFor={`q${index}-C`}>{question["Option C"]}</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="D" id={`q${index}-D`} />
-                    <Label htmlFor={`q${index}-D`}>{question["Option D"]}</Label>
-                  </div>
+                  {["A", "B", "C", "D"].map((letter) => (
+                    <div className="flex items-center space-x-2" key={letter}>
+                      <RadioGroupItem value={letter} id={`q${index}-${letter}`} />
+                     <Label htmlFor={`q${index}-${letter}`}>{getAnswerText(question, letter)}</Label>
+
+                    </div>
+                  ))}
                 </div>
               </RadioGroup>
             </CardContent>
@@ -225,38 +227,49 @@ export default function QuizPage() {
             </div>
             <p className="text-lg text-gray-600 dark:text-gray-300">
               {quizResult.score === quizResult.total
-                ? "Perfect score! Excellent knowledge!"
+                ? "Excellent! You've got all the answers right!"
                 : quizResult.score >= quizResult.total * 0.7
-                  ? "Great job! You have good knowledge of women's legal rights."
-                  : "Keep learning about women's legal rights and protections."}
+                  ? "Well done! You're well-informed about menstruation."
+                  : "Keep learning and help break the myths around menstruation."}
             </p>
           </div>
 
           <div className="space-y-6">
             <h3 className="text-xl font-semibold">Question Review</h3>
-            {quizResult.questions.map((question, index) => (
-              <div key={index} className="border rounded-lg p-4">
-                <p className="font-medium mb-2">
-                  Question {index + 1}: {question}
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Your Answer</p>
-                    <p
-                      className={`font-medium ${quizResult.user_answers[index] === quizResult.correct_answers[index] ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
-                    >
-                      {quizResult.user_answers[index]}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Correct Answer</p>
-                    <p className="font-medium text-green-600 dark:text-green-400">
-                      {quizResult.correct_answers[index]}
-                    </p>
+            {quizResult.questions.map((questionText, index) => {
+              const originalQuestion = questions.find((q) => q.Question === questionText)
+              return (
+                <div key={index} className="border rounded-lg p-4">
+                  <p className="font-medium mb-2">
+                    Question {index + 1}: {questionText}
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Your Answer</p>
+                      <p
+                        className={`font-medium ${
+                          quizResult.user_answers[index] === quizResult.correct_answers[index]
+                            ? "text-green-600 dark:text-green-400"
+                            : "text-red-600 dark:text-red-400"
+                        }`}
+                      >
+                        {originalQuestion
+                          ? getAnswerText(originalQuestion, quizResult.user_answers[index])
+                          : quizResult.user_answers[index]}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Correct Answer</p>
+                      <p className="font-medium text-green-600 dark:text-green-400">
+                        {originalQuestion
+                          ? getAnswerText(originalQuestion, quizResult.correct_answers[index])
+                          : quizResult.correct_answers[index]}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </CardContent>
         <CardFooter className="flex justify-center">
