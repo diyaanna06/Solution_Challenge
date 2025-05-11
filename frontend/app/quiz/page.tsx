@@ -12,7 +12,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import ParticleButton from "@/components/particle-button"
-import AnimatedBackground from "@/components/animated-background"
 import "@/app/animations.css"
 
 interface Question {
