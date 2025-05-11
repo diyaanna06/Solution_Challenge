@@ -11,7 +11,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Women's Empowerment Platform",
   description: "Empowering women through mentorship, career tools, legal advice, and pay equity.",
-  generator: "v0.dev",
+  icons: {
+    icon: "/image.png",
+  },
 };
 
 export default function RootLayout({
