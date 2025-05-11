@@ -3,19 +3,15 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { getQuizQuestions, submitQuiz } from "@/lib/api"
+import { Loader2 } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Loader2 } from "lucide-react"
+import ParticleButton from "@/components/particle-button"
+import AnimatedBackground from "@/components/animated-background"
+import "@/app/animations.css"
 
 interface Question {
   ID: number
@@ -54,14 +50,7 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [quizResult, setQuizResult] = useState<{
-    score: number
-    total: number
-    questions: string[]
-    correct_answers: string[]
-    user_answers: string[]
-    original_questions?: Question[]
-  } | null>(null)
+  const [quizResult, setQuizResult] = useState<any>(null)
 
   const handleStartQuiz = () => setStep("setup")
 
@@ -72,19 +61,15 @@ export default function QuizPage() {
       const data = await getQuizQuestions(numQuestions)
       setQuestions(data)
       setStep("quiz")
-    } catch (err) {
+    } catch {
       setError("Failed to load quiz questions. Please try again.")
-      console.error(err)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleAnswerChange = (questionIndex: number, answer: string) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [`q${questionIndex}`]: answer
-    }))
+  const handleAnswerChange = (index: number, value: string) => {
+    setAnswers((prev) => ({ ...prev, [`q${index}`]: value }))
   }
 
   const handleSubmitQuiz = async () => {
@@ -98,205 +83,174 @@ export default function QuizPage() {
       const result = await submitQuiz(answers)
       setQuizResult({ ...result, original_questions: questions })
       setStep("result")
-    } catch (err) {
+    } catch {
       setError("Failed to submit quiz. Please try again.")
-      console.error(err)
     } finally {
       setLoading(false)
     }
   }
 
-  const cardStyle = "rounded-2xl shadow-lg border border-pink-200"
-
-  const renderWelcome = () => (
-    <Card className={`max-w-2xl mx-auto ${cardStyle}`}>
-      <CardHeader>
-        <CardTitle className="text-center text-2xl">Menstrual Health Awareness Quiz</CardTitle>
-        <CardDescription className="text-center text-muted-foreground">
-          Challenge common myths and misconceptions about menstruation
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="text-center space-y-4">
-        <p>
-          This quiz is designed to bust taboos and raise awareness around menstruation and menstrual health.
-        </p>
-        <p>
-          You'll be presented with multiple-choice questions. Select the most accurate answer for each question.
-        </p>
-      </CardContent>
-      <CardFooter className="flex justify-center">
-        <Button onClick={handleStartQuiz} className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2">
-          Start Quiz
-        </Button>
-      </CardFooter>
-    </Card>
-  )
-
-  const renderSetup = () => (
-    <Card className={`max-w-2xl mx-auto ${cardStyle}`}>
-      <CardHeader>
-        <CardTitle className="text-center text-2xl">Quiz Setup</CardTitle>
-        <CardDescription className="text-center text-muted-foreground">
-          Choose how many questions you want to answer
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="num-questions">Number of Questions</Label>
-            <Input
-              id="num-questions"
-              type="number"
-              min="1"
-              max="40"
-              value={numQuestions}
-              onChange={(e) => setNumQuestions(Number.parseInt(e.target.value) || 5)}
-              className="mt-1"
-            />
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-center">
-        <Button onClick={handleSetupQuiz} disabled={loading} className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2">
-          {loading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Loading Quiz
-            </>
-          ) : (
-            "Start Quiz"
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
-  )
-
-  const renderQuiz = () => (
-    <div className="max-w-3xl mx-auto space-y-8">
-      <h1 className="text-3xl font-bold text-center text-pink-600">Menstrual Health Awareness Quiz</h1>
-
-      {error && (
-        <div className="bg-red-100 text-red-800 p-4 rounded-md">{error}</div>
-      )}
-
-      {questions.map((question, index) => (
-        <Card key={index} className={cardStyle}>
-          <CardHeader>
-            <CardTitle className="text-xl">Question {index + 1}: {question.Question}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RadioGroup
-              value={answers[`q${index}`] || ""}
-              onValueChange={(value) => handleAnswerChange(index, value)}
-              className="space-y-3"
-            >
-              {["A", "B", "C", "D"].map((letter) => (
-                <div className="flex items-center space-x-2" key={letter}>
-                  <RadioGroupItem value={letter} id={`q${index}-${letter}`} />
-                  <Label htmlFor={`q${index}-${letter}`}>{getAnswerText(question, letter)}</Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </CardContent>
-        </Card>
-      ))}
-
-      <div className="flex justify-center">
-        <Button
-          onClick={handleSubmitQuiz}
-          disabled={loading || Object.keys(answers).length !== questions.length}
-          className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Submitting
-            </>
-          ) : (
-            "Submit Quiz"
-          )}
-        </Button>
-      </div>
-    </div>
-  )
-
-  const renderResult = () => {
-    if (!quizResult) return null
-    const score = calculateScore(quizResult)
-
-    return (
-      <Card className={`max-w-3xl mx-auto ${cardStyle}`}>
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">Quiz Results</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center mb-8">
-            <div className="text-5xl font-bold text-pink-600 mb-2">
-              {score} / {quizResult.total}
-            </div>
-            <p className="text-lg text-gray-700 dark:text-gray-300">
-              {score === quizResult.total
-                ? "Excellent! You've got all the answers right!"
-                : score >= quizResult.total * 0.7
-                  ? "Well done! You're well-informed about menstruation."
-                  : "Keep learning and help break the myths around menstruation."}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Question Review</h3>
-            {quizResult.questions.map((questionText, index) => {
-              const originalQuestion = quizResult.original_questions?.find(q => q.Question === questionText)
-              return (
-                <div key={index} className="border rounded-lg p-4 bg-gray-50 dark:bg-gray-900">
-                  <p className="font-medium mb-2">
-                    Question {index + 1}: {questionText}
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Your Answer</p>
-                      <p>
-                        {originalQuestion
-                          ? getAnswerText(originalQuestion, quizResult.user_answers[index])
-                          : quizResult.user_answers[index]}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Correct Answer</p>
-                      <p>
-                        {originalQuestion
-                          ? getAnswerText(originalQuestion, quizResult.correct_answers[index])
-                          : quizResult.correct_answers[index]}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <Button
-            onClick={() => {
-              setStep("welcome")
-              setAnswers({})
-              setQuizResult(null)
-            }}
-            className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2"
-          >
-            Take Another Quiz
-          </Button>
-        </CardFooter>
-      </Card>
-    )
-  }
+  const wrapperClass =
+    "relative px-4 py-16 max-w-4xl mx-auto animate-fadeIn"
+  const cardClass =
+    "rounded-3xl border border-pink-200 dark:border-pink-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg shadow-xl"
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      {step === "welcome" && renderWelcome()}
-      {step === "setup" && renderSetup()}
-      {step === "quiz" && renderQuiz()}
-      {step === "result" && renderResult()}
+    <div className="relative min-h-screen overflow-hidden">
+      <AnimatedBackground />
+      <div className={wrapperClass}>
+        {step === "welcome" && (
+          <Card className={`${cardClass} text-center animate-slideInBottom`}>
+            <CardHeader>
+              <CardTitle className="text-3xl bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                Menstrual Health Awareness Quiz
+              </CardTitle>
+              <CardDescription className="text-gray-600 dark:text-gray-300">
+                Bust the myths, embrace the truth.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p>Menstruation is natural, yet shrouded in stigma. Let’s break that together.</p>
+              <p>This quiz is your first step toward becoming a menstrual health advocate.</p>
+              <p>Answer a few engaging questions and discover the facts that matter.</p>
+            </CardContent>
+            <CardFooter className="justify-center">
+              <ParticleButton onClick={handleStartQuiz} className="px-6 py-2 rounded-full">
+                Begin
+              </ParticleButton>
+            </CardFooter>
+          </Card>
+        )}
+
+        {step === "setup" && (
+          <Card className={`${cardClass} text-center animate-slideInBottom`}>
+            <CardHeader>
+              <CardTitle className="text-2xl bg-gradient-to-r from-teal-500 to-purple-600 bg-clip-text text-transparent">
+                Set Your Quiz Preferences
+              </CardTitle>
+              <CardDescription className="text-gray-600 dark:text-gray-300">
+                Choose how many questions you'd like to answer.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Each question helps unravel common myths. Even 5 questions can make a difference!
+              </p>
+              <Input
+                type="number"
+                min="1"
+                max="20"
+                value={numQuestions}
+                onChange={(e) => setNumQuestions(Number(e.target.value))}
+              />
+            </CardContent>
+            <CardFooter className="justify-center">
+              <ParticleButton onClick={handleSetupQuiz} disabled={loading}>
+                {loading ? (
+                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading...</>
+                ) : (
+                  "Start Quiz"
+                )}
+              </ParticleButton>
+            </CardFooter>
+          </Card>
+        )}
+
+        {step === "quiz" && (
+          <div className="space-y-8 animate-slideInBottom">
+            <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Quiz Questions
+            </h2>
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {questions.map((q, idx) => (
+              <Card key={idx} className={cardClass}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{`Q${idx + 1}: ${q.Question}`}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <RadioGroup
+                    value={answers[`q${idx}`] || ""}
+                    onValueChange={(val) => handleAnswerChange(idx, val)}
+                  >
+                    {['A', 'B', 'C', 'D'].map((opt) => (
+                      <div key={opt} className="flex items-center space-x-2 mb-2">
+                        <RadioGroupItem value={opt} id={`q${idx}-${opt}`} />
+                        <Label htmlFor={`q${idx}-${opt}`}>{getAnswerText(q, opt)}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </CardContent>
+              </Card>
+            ))}
+            <div className="text-center">
+              <ParticleButton
+                onClick={handleSubmitQuiz}
+                disabled={loading || Object.keys(answers).length !== questions.length}
+              >
+                {loading ? <Loader2 className="animate-spin" /> : "Submit Quiz"}
+              </ParticleButton>
+            </div>
+          </div>
+        )}
+
+        {step === "result" && quizResult && (
+          <Card className={`${cardClass} animate-fadeIn`}>
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                Your Results
+              </CardTitle>
+              <CardDescription className="text-gray-600 dark:text-gray-300">
+                See how well you did and share the knowledge!
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="text-center">
+                <p className="text-5xl font-bold text-pink-600">
+                  {calculateScore(quizResult)} / {quizResult.total}
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
+                  {calculateScore(quizResult) === quizResult.total
+                    ? "Perfect! You're a myth-busting queen."
+                    : calculateScore(quizResult) >= quizResult.total * 0.7
+                      ? "Great job! You're well informed."
+                      : "Keep learning and continue the journey."}
+                </p>
+              </div>
+              <div className="space-y-4">
+                {quizResult.questions.map((text: string, i: number) => {
+                  const q = quizResult.original_questions.find((q: Question) => q.Question === text)
+                  return (
+                    <div key={i} className="p-4 border rounded-lg bg-white dark:bg-zinc-800">
+                      <p className="font-medium mb-2">Q{i + 1}: {text}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-muted-foreground">Your Answer: </span>
+                          {getAnswerText(q, quizResult.user_answers[i])}
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Correct Answer: </span>
+                          {getAnswerText(q, quizResult.correct_answers[i])}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </CardContent>
+            <CardFooter className="justify-center">
+              <ParticleButton
+                onClick={() => {
+                  setStep("welcome")
+                  setAnswers({})
+                  setQuizResult(null)
+                }}
+              >
+                Retake Quiz
+              </ParticleButton>
+            </CardFooter>
+          </Card>
+        )}
+      </div>
     </div>
   )
 }

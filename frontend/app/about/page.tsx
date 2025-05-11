@@ -1,38 +1,55 @@
+"use client"
+
+import Link from "next/link"
+import AnimatedBackground from "@/components/animated-background"
+import ParticleButton from "@/components/particle-button"
+import "@/app/animations.css"
+
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-center">About Us</h1>
+    <div className="relative min-h-screen overflow-hidden">
+      <AnimatedBackground />
+      <div className="relative z-10 container mx-auto px-4 py-20 max-w-4xl animate-fadeIn">
+        <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-lg rounded-3xl shadow-xl border border-pink-200 dark:border-pink-800 p-8 md:p-12 space-y-8 text-center">
 
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="lead text-xl text-center mb-8">Bridging the Gender Gap – Empowering the Girl Child</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-600 to-teal-500">
+            About Us
+          </h1>
 
-          <p>
-            Educating and empowering women isn't just about equality, it's about progress. Together, let's bridge the
-            gap and build a world where every girl has the opportunity to thrive.
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+            <em>Bridging the Gender Gap – Empowering the Girl Child</em>
           </p>
 
-          <p>
-            This project is a heartfelt initiative by four girls who believe in change. Women across the world face
-            barriers in education, employment, healthcare, and fundamental rights. Our platform is a small but
-            significant step toward ensuring that every girl and woman receives the support, knowledge, and guidance she
-            deserves.
+          <p className="text-gray-700 dark:text-gray-400 leading-relaxed">
+            Educating and empowering women isn't just about equality—it's about progress. Together, we’re building a world where every girl has the opportunity to thrive, break barriers, and rise.
           </p>
 
-          <h2>Our Team</h2>
-          <p className="text-center">
-            Conceptualized and created with passion and purpose by{" "}
-            <strong>Arushi Waddepalli, Diya Anna Varghese, Merin Theres Jose</strong>, and{" "}
-            <strong>Sanjana Chennupati</strong>.
+          <p className="text-gray-700 dark:text-gray-400 leading-relaxed">
+            This platform is a heartfelt initiative by four passionate women committed to change. Across the globe, girls and women face obstacles in education, employment, healthcare, and rights. We're here to be part of the solution—one tool, quiz, and resource at a time.
           </p>
 
-          <div className="text-center mt-8">
-            <a href="/" className="inline-block bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
-              ← Back to Home
-            </a>
+          <div>
+            <h2 className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-2">
+              Our Team
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Created with purpose and pride by{" "}
+              <strong>Arushi Waddepalli, Diya Anna Varghese, Merin Theres Jose</strong>, and{" "}
+              <strong>Sanjana Chennupati</strong>.
+            </p>
+          </div>
+
+          <div className="flex justify-center mt-8">
+            <ParticleButton asChild size="lg" className="rounded-full px-6">
+              <Link href="/">← Back to Home</Link>
+            </ParticleButton>
           </div>
         </div>
       </div>
     </div>
   )
 }
+
+
+
+
