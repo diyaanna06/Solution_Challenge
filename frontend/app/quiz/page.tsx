@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import AnimatedBackground from "@/components/animated-background";
+
 import { useRouter } from "next/navigation"
 import { getQuizQuestions, submitQuiz } from "@/lib/api"
 import { Button } from "@/components/ui/button"
@@ -47,6 +49,7 @@ function calculateScore(quizResult: any) {
 }
 
 export default function QuizPage() {
+  <AnimatedBackground />
   const router = useRouter()
   const [step, setStep] = useState<"welcome" | "setup" | "quiz" | "result">("welcome")
   const [numQuestions, setNumQuestions] = useState(5)
