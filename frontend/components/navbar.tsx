@@ -12,9 +12,10 @@ export default function Navbar() {
   const pathname = usePathname()
 
   const routes = [
-    { name: "Home", path: "/" },
     { name: "Career Guidance", path: "/career-guidance" },
     { name: "Mentorship", path: "/mentorship" },
+        { name: "Scholarships", path: "/scholarships" },
+
     { name: "Quiz", path: "/quiz" },
     { name: "Chatbot", path: "/chatbot" },
     { name: "Pay Parity", path: "/pay-parity" },
@@ -28,7 +29,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center">
             <span className="text-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">
-              WomenEmpowerment
+              emPOWER
             </span>
           </Link>
 

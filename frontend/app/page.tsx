@@ -273,7 +273,7 @@ export default function Home() {
             </div>
             <div className="relative">
               <h1 className="text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-600 to-teal-500 leading-tight">
-                EMPOWER
+                emPOWER
               </h1>
               <div className="absolute -right-4 -top-4">
                 <Sparkles className="h-8 w-8 text-yellow-400" />
