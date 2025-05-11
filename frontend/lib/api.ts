@@ -111,7 +111,7 @@ export async function sendChatMessage(message: string) {
 // Pay Parity API
 export async function getSalaryComparison(data: {
   job: string
-  location: string
+  education_level: number
   experience: number
   user_salary: number
 }) {
