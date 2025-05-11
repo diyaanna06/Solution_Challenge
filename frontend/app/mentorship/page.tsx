@@ -4,11 +4,8 @@ import { useState, useEffect } from "react"
 import { getUniqueSkills, getMentorshipRecommendations } from "@/lib/api"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Loader2 } from "lucide-react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface MentorshipProgram {
   "Program Name": string
@@ -70,140 +67,135 @@ export default function MentorshipPage() {
           Select your skills to find mentorship programs that match your interests and career goals.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle>Select Your Skills</CardTitle>
-                <CardDescription>Choose the skills you want to develop or already possess</CardDescription>
-              </CardHeader>
-              <CardContent>
-  {skillsLoading ? (
-    <div className="flex justify-center py-8">
-      <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
-    </div>
-  ) : (
-    <div className="flex flex-wrap gap-4">
-      {skills.map((skill) => (
-        <Button
-          key={skill}
-          onClick={() => handleSkillToggle(skill)}
-          className={`px-4 py-2 rounded-full text-white font-medium shadow-md transition-all ${
-            selectedSkills.includes(skill)
-              ? "bg-gradient-to-r from-pink-500 to-purple-600"
-              : "bg-gradient-to-r from-gray-300 to-gray-400 hover:from-pink-500 hover:to-purple-600"
-          }`}
-        >
-          {skill}
-        </Button>
-      ))}
-    </div>
-  )}
-</CardContent>
-              <CardFooter>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={loading || selectedSkills.length === 0}
-                  className="w-full bg-pink-500 hover:bg-pink-600"
+        <Card className="mb-10">
+          <CardHeader className="text-center">
+            <CardTitle>Select Your Skills</CardTitle>
+            <CardDescription>Choose the skills you want to develop or already possess</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {skillsLoading ? (
+              <div className="flex justify-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
+              </div>
+            ) : (
+              <div className="flex flex-wrap justify-center gap-4 text-center">
+                {skills.map((skill) => (
+                  <Button
+                    key={skill}
+                    onClick={() => handleSkillToggle(skill)}
+                    className={`px-4 py-2 rounded-full text-white font-medium shadow-md transition-all ${
+                      selectedSkills.includes(skill)
+                        ? "bg-gradient-to-r from-pink-500 to-purple-600"
+                        : "bg-gradient-to-r from-gray-300 to-gray-400 hover:from-pink-500 hover:to-purple-600"
+                    }`}
+                  >
+                    {skill}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button
+              onClick={handleSubmit}
+              disabled={loading || selectedSkills.length === 0}
+              className="bg-pink-500 hover:bg-pink-600"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Finding Programs
+                </>
+              ) : (
+                "Find Mentorship Programs"
+              )}
+            </Button>
+          </CardFooter>
+        </Card>
+
+        <div>
+          {error && (
+            <div className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 p-4 rounded-md mb-6">
+              {error}
+            </div>
+          )}
+
+          {selectedSkills.length > 0 && (
+            <div className="mb-6">
+              <h2 className="text-lg font-medium mb-2">Selected Skills:</h2>
+              <div className="flex flex-wrap gap-2">
+                {selectedSkills.map((skill) => (
+                  <Badge key={skill} variant="secondary">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {programs.length > 0 ? (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-semibold">Recommended Programs</h2>
+              {programs.map((program, index) => (
+                <Card
+                  key={index}
+                  className={`shadow-lg rounded-lg ${
+                    index % 2 === 0
+                      ? "bg-gradient-to-r from-pink-100 to-pink-200 dark:from-pink-900 dark:to-pink-800"
+                      : "bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800"
+                  }`}
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Finding Programs
-                    </>
-                  ) : (
-                    "Find Mentorship Programs"
-                  )}
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-
-          <div className="md:col-span-2">
-            {error && (
-              <div className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 p-4 rounded-md mb-6">
-                {error}
-              </div>
-            )}
-
-            {selectedSkills.length > 0 && (
-              <div className="mb-6">
-                <h2 className="text-lg font-medium mb-2">Selected Skills:</h2>
-                <div className="flex flex-wrap gap-2">
-                  {selectedSkills.map((skill) => (
-                    <Badge key={skill} variant="secondary">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-{programs.length > 0 ? (
-  <div className="space-y-6">
-    <h2 className="text-2xl font-semibold">Recommended Programs</h2>
-    {programs.map((program, index) => (
-      <Card
-        key={index}
-        className={`shadow-lg rounded-lg ${
-          index % 2 === 0
-            ? "bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800"
-            : "bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900 dark:to-green-800"
-        }`}
-      >
-        <CardHeader>
-          <CardTitle className="text-lg font-bold text-gray-800 dark:text-gray-100">
-            {program["Program Name"]}
-          </CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-300">
-            Match Score: {Math.round(program.Similarity * 100)}%
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div>
-            <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">
-              Skills Covered
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {program.Skills.split(",").map((skill, i) => (
-                <Badge key={i} variant="outline">
-                  {skill.trim()}
-                </Badge>
+                  <CardHeader>
+                    <CardTitle className="text-lg font-bold text-gray-800 dark:text-gray-100">
+                      {program["Program Name"]}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-300">
+                      Match Score: {Math.round(program.Similarity * 100)}%
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div>
+                      <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        Skills Covered
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {program.Skills.split(",").map((skill, i) => (
+                          <Badge key={i} variant="outline">
+                            {skill.trim()}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button asChild variant="outline" className="w-full">
+                      <a
+                        href={program.Website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Website <ExternalLink className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
               ))}
             </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button asChild variant="outline" className="w-full">
-            <a
-              href={program.Website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Visit Website <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
-          </Button>
-        </CardFooter>
-      </Card>
-    ))}
-  </div>
-) : (
-  !loading && (
-    <div className="flex flex-col items-center justify-center h-full py-12 text-center">
-      <p className="text-gray-500 dark:text-gray-400 mb-4">
-        Select your skills and click "Find Mentorship Programs" to see
-        recommendations.
-      </p>
-    </div>
-  )
-)}
-
-            {loading && (
-              <div className="flex justify-center py-12">
-                <Loader2 className="h-12 w-12 animate-spin text-pink-500" />
+          ) : (
+            !loading && (
+              <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
+                  Select your skills and click "Find Mentorship Programs" to see recommendations.
+                </p>
               </div>
-            )}
-          </div>
+            )
+          )}
+
+          {loading && (
+            <div className="flex justify-center py-12">
+              <Loader2 className="h-12 w-12 animate-spin text-pink-500" />
+            </div>
+          )}
         </div>
       </div>
     </div>
