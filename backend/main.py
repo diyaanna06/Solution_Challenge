@@ -1,5 +1,5 @@
 
-  from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import random
@@ -165,9 +165,10 @@ def chat():
         return jsonify({"error": "Empty message"}), 400
 
     system_prompt = (
-        "You are a legal expert specializing in Female Foeticide Laws in India. "
+        "You are a legal expert specializing in Female Foeticide Laws. "
+        "first ask which coutry are you from so that u can provide accurate information. "
         "Provide accurate, legally sound, and fact-based responses. "
-        "Cite relevant sections of the PCPNDT Act and Indian Penal Code when necessary. "
+        "Cite relevant sections of the PCPNDT Act and Penal Code when necessary. "
         "Ensure responses are in a simple, understandable format."
     )
 

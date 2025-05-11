@@ -26,7 +26,7 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "Hello! I'm a legal expert specializing in Female Foeticide Laws in India. How can I help you today?",
+      text: "Hello! I'm a legal expert specializing in Female Foeticide Laws . How can I help you today?",
       sender: "bot",
       timestamp: new Date(),
     },
