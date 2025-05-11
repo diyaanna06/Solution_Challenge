@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Loader2 } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface MentorshipProgram {
   "Program Name": string
@@ -133,62 +134,84 @@ export default function MentorshipPage() {
             </div>
           )}
 
-          {programs.length > 0 ? (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-semibold">Recommended Programs</h2>
-              {programs.map((program, index) => (
-                <Card
-                  key={index}
-                  className={`shadow-lg rounded-lg ${
-                    index % 2 === 0
-                      ? "bg-gradient-to-r from-pink-100 to-pink-200 dark:from-pink-900 dark:to-pink-800"
-                      : "bg-gradient-to-r from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800"
-                  }`}
-                >
-                  <CardHeader>
-                    <CardTitle className="text-lg font-bold text-gray-800 dark:text-gray-100">
-                      {program["Program Name"]}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-300">
-                      Match Score: {Math.round(program.Similarity * 100)}%
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div>
-                      <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        Skills Covered
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {program.Skills.split(",").map((skill, i) => (
-                          <Badge key={i} variant="outline">
-                            {skill.trim()}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button asChild variant="outline" className="w-full">
-                      <a
-                        href={program.Website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Visit Website <ExternalLink className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
+          <AnimatePresence>
+            {programs.length > 0 && !loading && (
+              <motion.div
+                className="space-y-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <h2 className="text-2xl font-semibold">Recommended Programs</h2>
+                {programs.map((program, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -3 }}
+                    className="relative group transition-transform duration-300 ease-in-out"
+                  >
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 blur-sm opacity-0 group-hover:opacity-30 transition-all duration-500 z-0 pointer-events-none" />
+
+                    <Card
+                      className={`relative z-10 shadow-md rounded-lg border border-transparent hover:border-pink-300 group-hover:shadow-xl transition-all duration-300 ease-in-out ${
+                        index % 2 === 0
+                          ? "bg-gradient-to-br from-pink-50 to-pink-100 dark:from-pink-900 dark:to-pink-800"
+                          : "bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800"
+                      }`}
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-lg font-bold text-gray-800 dark:text-gray-100">
+                          {program["Program Name"]}
+                        </CardTitle>
+                        <CardDescription className="text-gray-600 dark:text-gray-300">
+                          Match Score: {Math.round(program.Similarity * 100)}%
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div>
+                          <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">
+                            Skills Covered
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {program.Skills.split(",").map((skill, i) => (
+                              <Badge key={i} variant="outline">
+                                {skill.trim()}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="w-full transition-all duration-300 ease-in-out hover:bg-pink-500 hover:text-white hover:border-transparent"
+                        >
+                          <a
+                            href={program.Website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Visit Website <ExternalLink className="ml-2 h-4 w-4" />
+                          </a>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {!loading && programs.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+              <p className="text-gray-500 dark:text-gray-400 mb-4">
+                Select your skills and click "Find Mentorship Programs" to see recommendations.
+              </p>
             </div>
-          ) : (
-            !loading && (
-              <div className="flex flex-col items-center justify-center h-full py-12 text-center">
-                <p className="text-gray-500 dark:text-gray-400 mb-4">
-                  Select your skills and click "Find Mentorship Programs" to see recommendations.
-                </p>
-              </div>
-            )
           )}
 
           {loading && (
