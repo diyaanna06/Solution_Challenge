@@ -132,6 +132,29 @@ def get_recommendations():
     return jsonify(top_programs)
 
 
+
+
+    # Endpoint to fetch scholarships
+@app.route('/get-scholarships', methods=["GET"])
+def get_scholarships():
+    try:
+        # Load the CSV file
+        df = pd.read_csv('data/scholarships_final.csv')
+
+        # Filter by education level if provided
+        education_level = request.args.get('level')
+        if education_level:
+            df = df[df['Minimum Education Qualification'].str.contains(education_level, na=False, case=False)]
+
+        # Convert to a list of dictionaries
+        scholarships = df.to_dict(orient='records')
+
+        return jsonify(scholarships)
+    except Exception as e:
+        print("Error loading scholarships:", str(e))
+        return jsonify({"error": "Failed to load scholarships"}), 500
+
+
 # ========================== QUIZ FUNCTIONALITY ==========================
 
 answers_list = []
@@ -202,7 +225,7 @@ def get_questions():
         print("Error fetching questions:", str(e))
         return jsonify({"error": "Failed to fetch questions"}), 500
 
-        
+
 @app.route("/submit-quiz", methods=["POST"])
 def submit_quiz():
     try:

@@ -119,6 +119,15 @@ export default function Home() {
       link: "/quiz",
       color: "from-orange-500 to-amber-600",
     },
+
+  {
+    title: "Scholarship Finder", // New Card
+    description: "Discover scholarships tailored to your needs and aspirations",
+    icon: <Award className="h-6 w-6 text-yellow-600" />,
+    link: "/scholarships",
+    color: "from-yellow-500 to-orange-600",
+  },
+
     {
       title: "Legal Chatbot",
       description: "Get expert advice on female foeticide laws in India",
@@ -585,6 +594,19 @@ export default function Home() {
               <Link href="/community">Join Our Community</Link>
             </ParticleButton>
           </div>
+
+  {/* New Join Button */}
+    <div className="mt-6">
+      <Link href={"/about"}>
+      <Button
+        size="lg"
+        className="bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white px-6 py-3 rounded-full shadow-lg shadow-purple-500/20"
+      >
+        Join
+      </Button>
+      </Link>
+    </div>
+
         </div>
       </section>
     </div>

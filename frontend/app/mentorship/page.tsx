@@ -78,29 +78,28 @@ export default function MentorshipPage() {
                 <CardDescription>Choose the skills you want to develop or already possess</CardDescription>
               </CardHeader>
               <CardContent>
-                {skillsLoading ? (
-                  <div className="flex justify-center py-8">
-                    <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
-                  </div>
-                ) : (
-                  <ScrollArea className="h-[400px] pr-4">
-                    <div className="space-y-4">
-                      {skills.map((skill) => (
-                        <div key={skill} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`skill-${skill}`}
-                            checked={selectedSkills.includes(skill)}
-                            onCheckedChange={() => handleSkillToggle(skill)}
-                          />
-                          <Label htmlFor={`skill-${skill}`} className="cursor-pointer">
-                            {skill}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-                )}
-              </CardContent>
+  {skillsLoading ? (
+    <div className="flex justify-center py-8">
+      <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
+    </div>
+  ) : (
+    <div className="flex flex-wrap gap-4">
+      {skills.map((skill) => (
+        <Button
+          key={skill}
+          onClick={() => handleSkillToggle(skill)}
+          className={`px-4 py-2 rounded-full text-white font-medium shadow-md transition-all ${
+            selectedSkills.includes(skill)
+              ? "bg-gradient-to-r from-pink-500 to-purple-600"
+              : "bg-gradient-to-r from-gray-300 to-gray-400 hover:from-pink-500 hover:to-purple-600"
+          }`}
+        >
+          {skill}
+        </Button>
+      ))}
+    </div>
+  )}
+</CardContent>
               <CardFooter>
                 <Button
                   onClick={handleSubmit}
@@ -140,46 +139,64 @@ export default function MentorshipPage() {
               </div>
             )}
 
-            {programs.length > 0 ? (
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">Recommended Programs</h2>
-                {programs.map((program, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle>{program["Program Name"]}</CardTitle>
-                      <CardDescription>Match Score: {Math.round(program.Similarity * 100)}%</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div>
-                        <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">Skills Covered</p>
-                        <div className="flex flex-wrap gap-2">
-                          {program.Skills.split(",").map((skill, i) => (
-                            <Badge key={i} variant="outline">
-                              {skill.trim()}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button asChild variant="outline" className="w-full">
-                        <a href={program.Website} target="_blank" rel="noopener noreferrer">
-                          Visit Website <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              !loading && (
-                <div className="flex flex-col items-center justify-center h-full py-12 text-center">
-                  <p className="text-gray-500 dark:text-gray-400 mb-4">
-                    Select your skills and click "Find Mentorship Programs" to see recommendations.
-                  </p>
-                </div>
-              )
-            )}
+{programs.length > 0 ? (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-semibold">Recommended Programs</h2>
+    {programs.map((program, index) => (
+      <Card
+        key={index}
+        className={`shadow-lg rounded-lg ${
+          index % 2 === 0
+            ? "bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800"
+            : "bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900 dark:to-green-800"
+        }`}
+      >
+        <CardHeader>
+          <CardTitle className="text-lg font-bold text-gray-800 dark:text-gray-100">
+            {program["Program Name"]}
+          </CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-300">
+            Match Score: {Math.round(program.Similarity * 100)}%
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div>
+            <p className="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">
+              Skills Covered
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {program.Skills.split(",").map((skill, i) => (
+                <Badge key={i} variant="outline">
+                  {skill.trim()}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button asChild variant="outline" className="w-full">
+            <a
+              href={program.Website}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit Website <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+        </CardFooter>
+      </Card>
+    ))}
+  </div>
+) : (
+  !loading && (
+    <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+      <p className="text-gray-500 dark:text-gray-400 mb-4">
+        Select your skills and click "Find Mentorship Programs" to see
+        recommendations.
+      </p>
+    </div>
+  )
+)}
 
             {loading && (
               <div className="flex justify-center py-12">
