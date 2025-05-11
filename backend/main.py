@@ -186,19 +186,23 @@ def main():
 
 @app.route('/get-questions', methods=["GET"])
 def get_questions():
-    global answers_list
-    global num_questions
-    global questions
-    questions = []
-    n = num_questions
-    selected_questions = df.sample(n=n).to_dict(orient='records')
-    for i in range(n):
-        questions.append(selected_questions[i]['Question'])
-    answers = {str(q["ID"]): q["Correct Answer"] for q in selected_questions}
-    answers_list = list(answers.values())
-    return jsonify(selected_questions)
+    global answers_list, questions
+    try:
+        num_questions = request.args.get('num', type=int)
+        if not num_questions or num_questions <= 0 or num_questions > len(df):
+            return jsonify({"error": "Invalid number of questions requested"}), 400
 
+        selected_questions = df.sample(n=num_questions).to_dict(orient='records')
+        answers_list = [q["Correct Answer"] for q in selected_questions]
+        questions = [q["Question"] for q in selected_questions]
 
+        return jsonify(selected_questions)
+
+    except Exception as e:
+        print("Error fetching questions:", str(e))
+        return jsonify({"error": "Failed to fetch questions"}), 500
+
+        
 @app.route("/submit-quiz", methods=["POST"])
 def submit_quiz():
     try:

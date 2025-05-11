@@ -46,16 +46,22 @@ export async function getMentorshipRecommendations(skills: string[]) {
 }
 
 // Quiz APIs
-export async function getQuizQuestions(numQuestions: number) {
-  const response = await fetch(`${API_BASE_URL}/get-questions?num=${numQuestions}`)
+export const getQuizQuestions = async (numQuestions: number) => {
+  const apiUrl = `http://localhost:5000/get-questions?num=${numQuestions}`;
+  console.log(`Fetching questions from: ${apiUrl}`);
+
+  const response = await fetch(apiUrl, {
+    method: "GET",
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch quiz questions")
+    const errorText = await response.text();
+    console.error("API Error Response:", errorText);
+    throw new Error("Failed to fetch quiz questions");
   }
 
-  return response.json()
-}
-
+  return response.json();
+};
 
 export async function getQuizResult(answers: Record<string, string>) {
   const response = await fetch(`${API_BASE_URL}/get-quiz-result`, {
