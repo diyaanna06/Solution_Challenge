@@ -33,6 +33,9 @@ model = genai.GenerativeModel("gemini-2.0-flash")
 def recom():
     return render_template('education.html') """
 
+@app.route('/')
+def home():
+    return 'Backend is working!'
 
 @app.route("/get-career-advice", methods=["POST"])
 def career_advice():
