@@ -20,7 +20,7 @@ all_columns = joblib.load('models/all_columns.pkl')
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app)
 
 # ========================== GEMINI API FOR CAREER GUIDANCE ==========================
 
