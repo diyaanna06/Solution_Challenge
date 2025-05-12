@@ -23,7 +23,9 @@ Education and mentorship open doors to brighter futures. Our system involves a r
 
 ## Tech Stack
 
-- HTML
+- React
+- Next
+- TypeScript
 - CSS
 - JavaScript
 - Flask
@@ -48,10 +50,13 @@ Education and mentorship open doors to brighter futures. Our system involves a r
    Set up your Google API Key and any other environment variables as needed.
  
 4. Run these commands in different terminals :
+
   `cd Frontend
+ 
    npm run dev`
      
  `cd Backend
+
  python main.py`
 
 ## Live demo:
