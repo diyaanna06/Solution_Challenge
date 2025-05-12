@@ -7,6 +7,7 @@ services:
     startCommand: python main.py
     autoDeploy: true
     envVars: []
+    plan: free
 
   - type: web
     name: solution-frontend
@@ -15,6 +16,7 @@ services:
     buildCommand: npm install && npm run build
     startCommand: npm run start
     autoDeploy: true
+    plan: free
     envVars:
       - key: NEXT_PUBLIC_BACKEND_URL
         value: https://solution-backend.onrender.com
