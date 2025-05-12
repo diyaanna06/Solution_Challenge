@@ -3,7 +3,7 @@ services:
     name: solution-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt--use-feature=2020-resolver
+    buildCommand: pip install -r requirements.txt --use-feature=2020-resolver
     startCommand: python main.py
     autoDeploy: true
     envVars: []
