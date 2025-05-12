@@ -114,7 +114,7 @@ const fetchScholarships = async (level: string) => {
   setError("");
 
   try {
-    const response = await fetch(`http://localhost:5000/get-scholarships?level=${encodeURIComponent(level)}`);
+    const response = await fetch(`https://solution-backend-43qy.onrender.com/get-scholarships?level=${encodeURIComponent(level)}`);
     if (!response.ok) {
       throw new Error("Failed to fetch scholarships");
     }
