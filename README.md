@@ -1,4 +1,4 @@
-# Google Solution Challenge 2025
+# emPOWER
 *Bridging the Gender Gap – Empowering the Girl Child*
 
 Educating and empowering women isn't just about equality, it's about progress. Together, let's bridge the gap and build a world where every girl has the opportunity to thrive.
@@ -47,13 +47,16 @@ Education and mentorship open doors to brighter futures. Our system involves a r
 
    Set up your Google API Key and any other environment variables as needed.
  
-4. Ensure flask is running :
-   
- `python main.py`
+4. Run these commands in different terminals :
+  `cd Frontend
+   npm run dev`
+     
+ `cd Backend
+ python main.py`
 
 ## Live demo:
 
-[Google Solution Challenge 2025](https://solution-challenge-rpfv.onrender.com/)
+[emPOWER](https://solution-frontend-iv57.onrender.com)
 
 ## Contributors:
 1. [Arushi Waddepali](https://github.com/arushi2702)
