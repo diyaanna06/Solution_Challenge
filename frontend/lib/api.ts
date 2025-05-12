@@ -1,5 +1,5 @@
 // Base URL for the Flask backend
-const API_BASE_URL = "http://localhost:5000"
+const API_BASE_URL = "https://solution-backend-43qy.onrender.com"
 
 // Career Guidance API
 export async function getCareerAdvice(interests: string) {
@@ -47,7 +47,7 @@ export async function getMentorshipRecommendations(skills: string[]) {
 
 // Quiz APIs
 export const getQuizQuestions = async (numQuestions: number) => {
-  const apiUrl = `http://localhost:5000/get-questions?num=${numQuestions}`;
+  const apiUrl = `${API_BASE_URL}/get-questions?num=${numQuestions}`;
   console.log(`Fetching questions from: ${apiUrl}`);
 
   const response = await fetch(apiUrl, {
