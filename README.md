@@ -51,13 +51,13 @@ Education and mentorship open doors to brighter futures. Our system involves a r
  
 4. Run these commands in different terminals :
 
-  `cd Frontend
- 
-   npm run dev`
+  `cd Frontend`
+  
+  `npm run dev`
      
- `cd Backend
-
- python main.py`
+ `cd Backend`
+ 
+` python main.py`
 
 ## Live demo:
 
