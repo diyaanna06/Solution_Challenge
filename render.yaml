@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: solution-backend
+    env: python
+    rootDir: backend
+    buildCommand: ""
+    startCommand: python main.py
+    autoDeploy: true
+    envVars: []
+
+  - type: web
+    name: solution-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: https://solution-backend.onrender.com
