@@ -29,9 +29,9 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 
-@app.route('/recom')
+""" @app.route('/recom')
 def recom():
-    return render_template('education.html')
+    return render_template('education.html') """
 
 
 @app.route("/get-career-advice", methods=["POST"])
@@ -164,7 +164,7 @@ num_questions = 0
 df = pd.read_csv("data/questions.csv")
 
 
-@app.route('/')
+""" @app.route('/')
 def home():
     return render_template('home.html')
 
@@ -176,7 +176,7 @@ def serve_frontend():
 
 @app.route('/welcome')
 def welcome():
-    return render_template('quiz1.html')
+    return render_template('quiz1.html') """
 
 
 @app.route("/chat", methods=["POST"])
@@ -200,11 +200,11 @@ def chat():
     return jsonify({"response": response.text})
 
 
-@app.route('/main')
+""" @app.route('/main')
 def main():
     global num_questions
     num_questions = request.args.get('num', type=int)
-    return render_template('quiz2.html', num_questions=num_questions)
+    return render_template('quiz2.html', num_questions=num_questions) """
 
 
 @app.route('/get-questions', methods=["GET"])
@@ -251,11 +251,11 @@ def submit_quiz():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/result')
+""" @app.route('/result')
 def result():
     final_score = request.args.get("score", type=int)
     total_questions = request.args.get("total", type=int)
-    return render_template("quiz3.html", score=final_score, total=total_questions)
+    return render_template("quiz3.html", score=final_score, total=total_questions) """
 
 
 # ========================== PAY PARITY ==========================
@@ -311,7 +311,7 @@ def get_salary():
         print("Error:", str(e))
         return jsonify({"error": "Internal Server Error"}), 500
 
-@app.route("/services")
+""" @app.route("/services")
 def services():
     return render_template("services.html")
 
@@ -324,7 +324,7 @@ def about():
 @app.route("/statistics")
 def statistics():
     return render_template("statistics.html")
-
+ """
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
