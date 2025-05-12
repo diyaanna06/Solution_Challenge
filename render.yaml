@@ -3,7 +3,7 @@ services:
     name: solution-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt--use-feature=2020-resolver
     startCommand: python main.py
     autoDeploy: true
     envVars: []
@@ -13,7 +13,7 @@ services:
     name: solution-frontend
     env: node
     rootDir: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --legacy-peer-deps && npm run build
     startCommand: npm run start
     autoDeploy: true
     plan: free
