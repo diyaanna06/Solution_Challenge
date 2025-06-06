@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import pandas as pd
@@ -12,31 +11,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
-
-model1 = joblib.load('models/PayParity.pkl')
-all_columns = joblib.load('models/all_columns.pkl')
-
-# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
-
-# ========================== GEMINI API FOR CAREER GUIDANCE ==========================
-
-# Configure Gemini API
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-model = genai.GenerativeModel("gemini-2.0-flash")
-
-
-""" @app.route('/recom')
-def recom():
-    return render_template('education.html') """
 
 @app.route('/')
 def home():
     return 'Backend is working!'
 
+# ========================== CAREER GUIDANCE ==========================
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+model = genai.GenerativeModel("gemini-2.0-flash")
 @app.route("/get-career-advice", methods=["POST"])
 def career_advice():
     try:
@@ -67,7 +52,6 @@ def career_advice():
             ]
         }}
         """
-
         response = model.generate_content(
             prompt,
             generation_config={
@@ -92,18 +76,13 @@ def career_advice():
 
 
 # ========================== MENTORSHIP PROGRAM RECOMMENDATIONS ==========================
-
-# Load mentorship data
 file_path = "data/mentorship.csv"
 programs_df = pd.read_csv(file_path)
-
-# Extract unique skills
 all_skills = set()
 for skills in programs_df["Skills"].dropna():
     cleaned_skills = [skill.strip().title() for skill in skills.split(",")]
     all_skills.update(cleaned_skills)
 all_skills = sorted(all_skills)
-
 
 @app.route("/get_unique_skills", methods=["GET"])
 def get_unique_skills():
@@ -134,53 +113,21 @@ def get_recommendations():
 
     return jsonify(top_programs)
 
-
-
-
-    # Endpoint to fetch scholarships
+# ========================== SCHOLARSHIPS ==========================
 @app.route('/get-scholarships', methods=["GET"])
 def get_scholarships():
     try:
-        # Load the CSV file
         df = pd.read_csv('data/scholarships_final.csv')
-
-        # Filter by education level if provided
         education_level = request.args.get('level')
         if education_level:
             df = df[df['Minimum Education Qualification'].str.contains(education_level, na=False, case=False)]
-
-        # Convert to a list of dictionaries
         scholarships = df.to_dict(orient='records')
-
         return jsonify(scholarships)
     except Exception as e:
         print("Error loading scholarships:", str(e))
         return jsonify({"error": "Failed to load scholarships"}), 500
 
-
-# ========================== QUIZ FUNCTIONALITY ==========================
-
-answers_list = []
-selected_questions = []
-questions = []
-num_questions = 0
-df = pd.read_csv("data/questions.csv")
-
-
-""" @app.route('/')
-def home():
-    return render_template('home.html')
-
-
-@app.route("/chat")
-def serve_frontend():
-    return render_template("chatbot.html")
-
-
-@app.route('/welcome')
-def welcome():
-    return render_template('quiz1.html') """
-
+# ========================== CHATBOT ==========================
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -197,19 +144,16 @@ def chat():
         "Cite relevant sections of the PCPNDT Act and Penal Code when necessary. "
         "Ensure responses are in a simple, understandable format."
     )
-
     response = model.generate_content(f"{system_prompt}\n\nUser: {user_input}\nBot:")
-
     return jsonify({"response": response.text})
 
+# ========================== QUIZ FUNCTIONALITY ==========================
 
-""" @app.route('/main')
-def main():
-    global num_questions
-    num_questions = request.args.get('num', type=int)
-    return render_template('quiz2.html', num_questions=num_questions) """
-
-
+answers_list = []
+selected_questions = []
+questions = []
+num_questions = 0
+df = pd.read_csv("data/questions.csv")
 @app.route('/get-questions', methods=["GET"])
 def get_questions():
     global answers_list, questions
@@ -217,13 +161,10 @@ def get_questions():
         num_questions = request.args.get('num', type=int)
         if not num_questions or num_questions <= 0 or num_questions > len(df):
             return jsonify({"error": "Invalid number of questions requested"}), 400
-
         selected_questions = df.sample(n=num_questions).to_dict(orient='records')
         answers_list = [q["Correct Answer"] for q in selected_questions]
         questions = [q["Question"] for q in selected_questions]
-
         return jsonify(selected_questions)
-
     except Exception as e:
         print("Error fetching questions:", str(e))
         return jsonify({"error": "Failed to fetch questions"}), 500
@@ -254,14 +195,9 @@ def submit_quiz():
         return jsonify({"error": str(e)}), 500
 
 
-""" @app.route('/result')
-def result():
-    final_score = request.args.get("score", type=int)
-    total_questions = request.args.get("total", type=int)
-    return render_template("quiz3.html", score=final_score, total=total_questions) """
-
-
 # ========================== PAY PARITY ==========================
+model1 = joblib.load('models/PayParity.pkl')
+all_columns = joblib.load('models/all_columns.pkl')
 
 @app.route("/get_salary", methods=['POST'])
 def get_salary():
@@ -313,22 +249,6 @@ def get_salary():
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": "Internal Server Error"}), 500
-
-""" @app.route("/services")
-def services():
-    return render_template("services.html")
-
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-
-@app.route("/statistics")
-def statistics():
-    return render_template("statistics.html")
- """
-
+    
 if __name__ == "__main__":
     app.run(debug=True, port=5000,host='0.0.0.0')
-
