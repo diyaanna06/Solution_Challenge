@@ -37,13 +37,18 @@ Education and mentorship open doors to brighter futures. Our system involves a r
 - Pandas
 
 ## To Run the Project
-1. Clone the Repository:
+1. Fork & Clone the Repository:
    
- `git clone https://github.com/diyaanna06/HackoFiesta.git`
+ ```bash
+ git clone https://github.com/<your-username>/emPOWER.git
+ cd emPOWER
+```
  
 2. Install the requirements:
 
- `pip install -r requirements.txt`
+ ```bash
+ pip install -r requirements.txt
+```
  
 3.  Environment Variables:
 
@@ -51,13 +56,14 @@ Education and mentorship open doors to brighter futures. Our system involves a r
  
 4. Run these commands in different terminals :
 
-  `cd Frontend`
-  
-  `npm run dev`
-     
- `cd Backend`
- 
-` python main.py`
+  ```bash
+  cd Frontend
+  npm run dev
+```
+```bash
+cd Backend
+python main.py
+```
 
 ## Live demo:
 
